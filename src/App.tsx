@@ -5,7 +5,6 @@ import { Dispatch } from 'react';
 import Menu from './components/Menu';
 import Page from './pages/Page';
 import Login from './pages/Login';
-import RedirectToLogin from './pages/RedirectToLogin';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -30,7 +29,7 @@ import Account from './pages/Account';
 
 const App: React.FC = () => {
 
-  const [isLoggedin, setIsLoggedin] = useState(true);
+  const [isLoggedin, setIsLoggedin] = useState(false);
 
   useEffect(() => {
     checkIsLoggedIn(setIsLoggedin);
@@ -53,11 +52,8 @@ const App: React.FC = () => {
             <Route path="/page/:name" exact={true}>
 	      { isLoggedin ? <Page /> : <Login setIsLoggedin={setIsLoggedin} /> }
             </Route>
-            <Route path="/page/account" exact={true}>
+            <Route path="/page/Account" exact={true}>
 	      { isLoggedin ? <Account setIsLoggedin={setIsLoggedin} /> : <Login setIsLoggedin={setIsLoggedin} /> }
-            </Route>
-            <Route path="/login" exact={true}>
-	      <Login setIsLoggedin={setIsLoggedin} />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>

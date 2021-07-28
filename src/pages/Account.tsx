@@ -27,11 +27,13 @@ const Account: React.FC<AccountProps> = ({ setIsLoggedin }) => {
         {true &&
           (<div className="ion-padding-top ion-text-center">
             <img src="https://www.gravatar.com/avatar?d=mm&s=140" alt="avatar" />
-            <h2>Hello abc</h2>
+            <h2>*Username goes here*</h2>
             <IonList inset>
+	      {/*
               <IonItem onClick={() => clicked('Update Picture')}>Update Picture</IonItem>
               <IonItem onClick={() => clicked('Change Password')}>Change Password</IonItem>
-	      <IonItem onClick={() => setIsLoggedin(false) }>Logout</IonItem>
+	      */}
+	      <IonItem onClick={() => setIsLoggedin(false) } style={{cursor: "pointer"}}>Logout</IonItem>
             </IonList>
           </div>)
         }
