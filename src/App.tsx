@@ -5,6 +5,7 @@ import { Dispatch } from 'react';
 import Menu from './components/Menu';
 import Page from './pages/Page';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -54,6 +55,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/page/Account" exact={true}>
 	      { isLoggedin ? <Account setIsLoggedin={setIsLoggedin} /> : <Login setIsLoggedin={setIsLoggedin} /> }
+            </Route>
+            <Route path="/signup" exact={true}>
+	      { isLoggedin ? <Redirect to="/page/Inbox" /> : <Signup /> }
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
