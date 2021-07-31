@@ -30,7 +30,7 @@ import {useEffect, useState} from 'react';
 
 const App: React.FC = () => {
 
-  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [isLoggedin, setIsLoggedin] = useState(true);
 
   useEffect(() => {
     checkIsLoggedIn(setIsLoggedin);
@@ -57,7 +57,7 @@ const App: React.FC = () => {
 	      { isLoggedin ? <Account setIsLoggedin={setIsLoggedin} /> : <Login setIsLoggedin={setIsLoggedin} /> }
             </Route>
             <Route path="/signup" exact={true}>
-	      { isLoggedin ? <Redirect to="/page/Inbox" /> : <Signup /> }
+	      { isLoggedin ? <Redirect to="/" /> : <Signup /> }
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
