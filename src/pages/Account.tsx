@@ -1,7 +1,6 @@
 import React, { useState, Dispatch } from 'react';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonList, IonItem, IonAlert } from '@ionic/react';
 import './Account.css';
-import { RouteComponentProps, Redirect } from 'react-router';
 
 type AccountProps = {
   setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;

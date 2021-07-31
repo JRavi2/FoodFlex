@@ -3,9 +3,10 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import { Dispatch } from 'react';
 import Menu from './components/Menu';
-import Page from './pages/Page';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Home from './pages/Home';
+import Account from './pages/Account';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -26,7 +27,6 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import {useEffect, useState} from 'react';
-import Account from './pages/Account';
 
 const App: React.FC = () => {
 
@@ -48,10 +48,10 @@ const App: React.FC = () => {
 	  {isLoggedin && <Menu />}
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
-	      { isLoggedin ? <Redirect to="/page/Inbox" /> : <Login setIsLoggedin={setIsLoggedin} /> }
+	      { isLoggedin ? <Redirect to="/page/Home" /> : <Login setIsLoggedin={setIsLoggedin} /> }
             </Route>
-            <Route path="/page/:name" exact={true}>
-	      { isLoggedin ? <Page /> : <Login setIsLoggedin={setIsLoggedin} /> }
+            <Route path="/page/Home" exact={true}>
+	      { isLoggedin ? <Home /> : <Login setIsLoggedin={setIsLoggedin} /> }
             </Route>
             <Route path="/page/Account" exact={true}>
 	      { isLoggedin ? <Account setIsLoggedin={setIsLoggedin} /> : <Login setIsLoggedin={setIsLoggedin} /> }
