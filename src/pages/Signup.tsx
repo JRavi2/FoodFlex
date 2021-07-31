@@ -14,24 +14,33 @@ const Signup: React.FC = () => {
   const [budget, setBudget] = useState('');
   const [preferredRestaurants, setPreferredRestaurants] = useState('');
   const [preferredCuisines, setPreferredCuisines] = useState('');
+  const [dislikedDishes, setDislikedDishes] = useState('');
   // const [formSubmitted, setFormSubmitted] = useState(false);
   // const [usernameError, setUsernameError] = useState(false);
   // const [passwordError, setPasswordError] = useState(false);
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
-    // setFormSubmitted(true);
-    // if(!username) {
-    //   setUsernameError(true);
-    // }
-    // if(!password) {
-    //   setPasswordError(true);
-    // }
 
-    // if(username && password) {
-    //   setIsLoggedin(true);
-    // }
-  };
+    // extract form data
+    const target = e.target as HTMLFormElement;
+    console.log(target);
+    const formdata = new FormData(target);
+
+    // POST the request to Staticman's API endpoint
+    const response = await fetch(process.env.REACT_APP_API_URL + "/signup/", {
+      method: "POST",
+      // headers: {"Content-Type": "application/form-data"},
+      body: formdata,
+    })
+      .then(response => {
+	console.log("success");
+      })
+      .catch(error => {
+	console.log("error");
+	console.log(error);
+      });
+  }
 
   return (
     <IonPage id="login-page">
@@ -87,25 +96,31 @@ const Signup: React.FC = () => {
 
             <IonItem>
               <IonLabel position="stacked" color="primary">Budget</IonLabel>
-              <IonInput name="budget" type="text" value={budget} onIonChange={e => setBudget(e.detail.value!)}>
+              <IonInput name="budget" type="number" value={budget} onIonChange={e => setBudget(e.detail.value!)}>
               </IonInput>
             </IonItem>
 
             <IonItem>
               <IonLabel position="stacked" color="primary">Preferred Restaurants</IonLabel>
-              <IonInput name="budget" type="text" value={preferredRestaurants} onIonChange={e => setPreferredRestaurants(e.detail.value!)}>
+              <IonInput name="preferred_restaurants" type="text" value={preferredRestaurants} onIonChange={e => setPreferredRestaurants(e.detail.value!)}>
               </IonInput>
             </IonItem>
 
             <IonItem>
               <IonLabel position="stacked" color="primary">Preferred Cuisines</IonLabel>
-              <IonInput name="budget" type="text" value={preferredCuisines} onIonChange={e => setPreferredCuisines(e.detail.value!)}>
+              <IonInput name="preferred_cuisines" type="text" value={preferredCuisines} onIonChange={e => setPreferredCuisines(e.detail.value!)}>
+              </IonInput>
+            </IonItem>
+
+            <IonItem>
+              <IonLabel position="stacked" color="primary">Disliked Dishes</IonLabel>
+              <IonInput name="not_preferred" type="text" value={dislikedDishes} onIonChange={e => setDislikedDishes(e.detail.value!)}>
               </IonInput>
             </IonItem>
 
             <IonItem>
               <IonLabel position="stacked" color="primary">Mess Menu</IonLabel>
-	      <input type="file" />
+	      <input type="file" name="upload_mess_menu" />
             </IonItem>
 
           </IonList>
