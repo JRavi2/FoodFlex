@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@303&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+.content{
+  background: url("backg.png") !important;
+
+}
+.top-grid{
+  margin:0;
+  padding:0;
+}
+.btn-power{
+  margin:20px;
+  opacity: 0.8;
+}
+.top-card{
+  border: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-style: none !important;
+  margin:0;
+  padding: 0;
+}
+.userName{
+  font-family: 'Merriweather Sans', sans-serif;
+  color:rgb(70, 69, 69);
+}
+.main-card{
+  background:none;
+/* 
+  background: #000428; 
+  background: -webkit-linear-gradient(to bottom, #004e92, #000428);  
+  background: linear-gradient(to bottom, #004e92, #000428);  */
+  background: url("backgnd.png")100% 100%  !important;
+ 
+height:200px;
+border-radius: 20px;
+margin:15px;  
+}
+.subHeading{
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  color: rgb(255, 232, 232);
+}
+.heading{
+  color: #fc8297;
+  font-size: 15px;
+}
+.food-item{
+  color:rgb(255, 232, 232);
+  font-size: 34px;
+  font-family: 'Anton', sans-serif;
+}
+/* .price{
+  margin-top: 5px;
+  display:inline-block;
+  border-radius:50%;
+  background-color: #ffffff;
+  opacity: 0.4;
+  height: 80px;
+  text-align: center;
+
+} */
+.price{
+  font-size: 30px;
+  color: #fc8297;
+  opacity: 0.5;
+
+}
