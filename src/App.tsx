@@ -59,7 +59,7 @@ const App: React.FC = () => {
                <Login setIsLoggedin={setIsLoggedin} />
             </Route>
 
-            
+
           </IonRouterOutlet>
           :
           <IonTabs>
