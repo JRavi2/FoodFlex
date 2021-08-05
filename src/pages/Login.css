@@ -1,9 +1,22 @@
 .login-logo {
-  padding: 20px 0;
+  margin:0;
+  padding:  0;
   min-height: 200px;
   text-align: center;
+  background-image: url("pizza.png") no-repeat !important;
+  /* border-radius: 0 0 180px 180px ; */
+  width: 100%;
+  /* background: linear-gradient(#428cff 49%, transparent 49%),
+        linear-gradient(-45deg, white 33%, transparent 33%) 0 50%,
+        white linear-gradient(45deg, white 33%, #428cff 33%) 0 50%;
+    background-repeat: repeat-x;
+    background-size: 1px 100%, 20px 20px, 20px 20px; */
+ 
 }
-
+.welcome{
+  margin:10px;
+  font-size: 40px;
+}
 .login-logo img {
   max-width: 150px;
 }
@@ -11,3 +24,6 @@
 .list {
   margin-bottom: 0;
 }
+/* #login-page{
+  --background: url("backgnd.png") ;
+} */

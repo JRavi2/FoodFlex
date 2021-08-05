@@ -1,5 +1,5 @@
 import React, { useState, useContext, Dispatch } from 'react';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonRow, IonCol, IonButton, IonList, IonItem, IonLabel, IonInput, IonText } from '@ionic/react';
+import { IonContent, IonPage, IonRow, IonCol, IonButton, IonList, IonItem, IonLabel, IonInput, IonText, IonTitle } from '@ionic/react';
 import './Login.css';
 // import { RouteComponentProps, Redirect } from 'react-router';
 
@@ -32,17 +32,17 @@ const Login: React.FC<Props> = ({ setIsLoggedin }) => {
 
   return (
     <IonPage id="login-page">
-      <IonHeader>
+      {/* <IonHeader>
         <IonToolbar>
           <IonTitle>Login</IonTitle>
         </IonToolbar>
-      </IonHeader>
-      <IonContent>
+      </IonHeader> */}
+      <IonContent id="login-page">
 
         <div className="login-logo">
-          <img src="assets/img/appicon.svg" alt="Ionic logo" />
+          <img src="pizza.svg" alt="Ionic logo" width="90" height="90" /> 
         </div>
-
+        <IonTitle className="welcome">WELCOME</IonTitle>
         <form noValidate onSubmit={login}>
           <IonList>
             <IonItem>
@@ -80,7 +80,7 @@ const Login: React.FC<Props> = ({ setIsLoggedin }) => {
             </IonCol>
           </IonRow>
         </form>
-
+       
       </IonContent>
 
     </IonPage>
