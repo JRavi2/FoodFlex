@@ -1,5 +1,6 @@
 import React,{Dispatch} from "react";
 import {IonToast} from '@ionic/react';
+//Toasts for Home page Cards
 type ToastProps = {
     toastIsShown: boolean,
     setToastIsShown: Dispatch<React.SetStateAction<boolean>>,

@@ -46,7 +46,9 @@ max-height: 60px !important;
   background: #000428; 
   background: -webkit-linear-gradient(to bottom, #004e92, #000428);  
   background: linear-gradient(to bottom, #004e92, #000428);  */
-  background: url("backgnd.png")100% 100%  !important;
+  /* https://i.postimg.cc/sfG24XVQ/fruy.png */
+  /* https://i.postimg.cc/xTg3Gtj1/fru.png */
+  background: url("https://i.postimg.cc/25PmQY3D/process.jpg") 100% 100%  !important;
  
 height:200px;
 border-radius: 20px;

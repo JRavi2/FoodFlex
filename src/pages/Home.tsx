@@ -20,13 +20,14 @@ import {
 } from '@ionic/react';
 import Cards from "../components/Cards";
 import "./Home.css"
-import { cashOutline, power, pencilOutline, arrowUpCircleOutline, todayOutline, personOutline, addOutline } from "ionicons/icons";
+import { cashOutline, pencilOutline, arrowUpCircleOutline, todayOutline, personOutline, addOutline } from "ionicons/icons";
 
 type ParentProps = {
   setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
   userName: string;
   setUsername: Dispatch<React.SetStateAction<string>>;
 };
+
 const BudgetContent: React.FC = () => {
   const [toastIsShown, setToastIsShown] = useState<boolean>(false);
   const inBudget = useRef<HTMLIonInputElement>(null);
@@ -44,11 +45,12 @@ const BudgetContent: React.FC = () => {
         <IonLabel color="primary" position="floating" className="budgetLabel">Enter Budget</IonLabel>
         <IonInput className="update-budget" ref={inBudget} type="number"></IonInput>
       </IonItem>
-      <IonButton color="primary" className="cardBtn" onClick={() => showToast()}> Update</IonButton>
+      <IonButton color="light" className="cardBtn" onClick={() => showToast()}> Update</IonButton>
       <Toasts toastIsShown={toastIsShown} setToastIsShown={setToastIsShown} msg="Budget Updated"></Toasts>
     </IonCardContent>
   )
 }
+
 const MenuContent: React.FC = () => {
   const [toastIsShown, setToastIsShown] = useState<boolean>(false);
   const showToast = () => {
@@ -61,11 +63,12 @@ const MenuContent: React.FC = () => {
         <input type="file" className="messMenu" name="upload_mess_menu" />
         {/* </IonLabel> */}
       </IonItem>
-      <IonButton color="primary" className="cardBtn" onClick={() => showToast()}>Upload</IonButton>
+      <IonButton color="light" className="cardBtn" onClick={() => showToast()}>Upload</IonButton>
       <Toasts toastIsShown={toastIsShown} setToastIsShown={setToastIsShown} msg="Menu Added"></Toasts>
     </IonCardContent>
   )
 }
+
 const VendorContent: React.FC = () => {
   const [toastIsShown, setToastIsShown] = useState<boolean>(false);
   const showToast = () => {
@@ -97,7 +100,7 @@ const Home: React.FC<ParentProps> = (props) => {
               </IonCol>
               <IonCol className="av-col" >
                 <IonAvatar className="home-img" >
-                  <img src="https://i.postimg.cc/KzS4dXGD/av2.png" />
+                  <img src="https://i.postimg.cc/s1dTZX3G/av4.png" />
                 </IonAvatar>
               </IonCol>
             </IonRow>

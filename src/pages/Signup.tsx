@@ -14,6 +14,9 @@ import {
   IonInput,
 } from "@ionic/react";
 import "./Login.css";
+import "./Signup.css";
+import SignUpInput from "../components/SignUpInput";
+import ChipsComp from "../components/ChipsComp";
 // import { RouteComponentProps, Redirect } from 'react-router';
 
 const Signup: React.FC = () => {
@@ -29,7 +32,7 @@ const Signup: React.FC = () => {
   const [dislikedDishes, setDislikedDishes] = useState("");
   const [restSuggestions, setRestSuggestions] = useState<ReactElement<any, any>>();
   const [selectedRests, setSelectedRests] = useState<{ id: any; name: any }[]>([]);
-  const [chips,setChip] = useState<boolean>(true);
+  const [ischips,setChip] = useState<boolean>(true);
   // const [formSubmitted, setFormSubmitted] = useState(false);
   // const [usernameError, setUsernameError] = useState(false);
   // const [passwordError, setPasswordError] = useState(false);
@@ -111,14 +114,14 @@ const Signup: React.FC = () => {
 
   return (
     <IonPage id="login-page">
-      <IonHeader>
+      {/* <IonHeader>
         <IonToolbar>
           <IonTitle>Sign Up</IonTitle>
         </IonToolbar>
-      </IonHeader>
+      </IonHeader> */}
       <IonContent>
         <div className="login-logo">
-          <img src="assets/img/appicon.svg" alt="Ionic logo" />
+          <img src="https://i.postimg.cc/d3nNXrr2/signup.png" alt="Ionic logo" />
         </div>
 
         <form noValidate onSubmit={login}>
@@ -137,8 +140,15 @@ const Signup: React.FC = () => {
                 required
               ></IonInput>
             </IonItem>
+            <SignUpInput nameIn={"password1"} typeIn={"password"} value={password1} setter={setPassword1}>Password</SignUpInput>
+            <SignUpInput nameIn={"password2"} typeIn={"password"} value={password2} setter={setPassword2}>Confirm Password</SignUpInput>
+            <SignUpInput nameIn={"name"} typeIn={"text"} value={name} setter={setName}>Name</SignUpInput>
+            <SignUpInput nameIn={"address"} typeIn={"text"} value={address} setter={setAddress}>Address</SignUpInput>
+            <SignUpInput nameIn={"phone"} typeIn={"tel"} value={phone} setter={setPhone}>Phone</SignUpInput>
+            <SignUpInput nameIn={"budget"} typeIn={"number"} value={budget} setter={setBudget}>Address</SignUpInput>
 
-            <IonItem>
+
+            {/* <IonItem>
               <IonLabel position="stacked" color="primary">
                 Password
               </IonLabel>
@@ -148,9 +158,9 @@ const Signup: React.FC = () => {
                 value={password1}
                 onIonChange={(e) => setPassword1(e.detail.value!)}
               ></IonInput>
-            </IonItem>
+            </IonItem> */}
 
-            <IonItem>
+            {/* <IonItem>
               <IonLabel position="stacked" color="primary">
                 Confirm Password
               </IonLabel>
@@ -160,16 +170,16 @@ const Signup: React.FC = () => {
                 value={password2}
                 onIonChange={(e) => setPassword2(e.detail.value!)}
               ></IonInput>
-            </IonItem>
+            </IonItem> */}
 
-            <IonItem>
+            {/* <IonItem>
               <IonLabel position="stacked" color="primary">
                 Name
               </IonLabel>
               <IonInput name="name" type="text" value={name} onIonChange={(e) => setName(e.detail.value!)}></IonInput>
-            </IonItem>
+            </IonItem> */}
 
-            <IonItem>
+            {/* <IonItem>
               <IonLabel position="stacked" color="primary">
                 Address
               </IonLabel>
@@ -179,9 +189,9 @@ const Signup: React.FC = () => {
                 value={address}
                 onIonChange={(e) => setAddress(e.detail.value!)}
               ></IonInput>
-            </IonItem>
+            </IonItem> */}
 
-            <IonItem>
+            {/* <IonItem>
               <IonLabel position="stacked" color="primary">
                 Phone
               </IonLabel>
@@ -191,9 +201,9 @@ const Signup: React.FC = () => {
                 value={phone}
                 onIonChange={(e) => setPhone(e.detail.value!)}
               ></IonInput>
-            </IonItem>
+            </IonItem> */}
 
-            <IonItem>
+            {/* <IonItem>
               <IonLabel position="stacked" color="primary">
                 Budget
               </IonLabel>
@@ -203,7 +213,7 @@ const Signup: React.FC = () => {
                 value={budget}
                 onIonChange={(e) => setBudget(e.detail.value!)}
               ></IonInput>
-            </IonItem>
+            </IonItem> */}
 
             <IonItem>
               <IonLabel position="stacked" color="primary">
@@ -216,11 +226,18 @@ const Signup: React.FC = () => {
                 onKeyDown={onRestInputChange}
                 ref={restInput}
               ></IonInput>
+
               {restSuggestions}
               
               {selectedRests.map((rest: any) => (
-                <div id={rest.id}>{rest.name}</div>
-              ))}
+                <div id={rest.id} className="chipsDiv">
+                  { ischips && <ChipsComp restName={rest.name} isChips={ischips} setChip={setChip}></ChipsComp>}
+                </div>
+              
+              ))
+            }
+            
+
               
             </IonItem>
 
@@ -258,7 +275,7 @@ const Signup: React.FC = () => {
 
           <IonRow>
             <IonCol>
-              <IonButton type="submit" expand="block">
+              <IonButton type="submit" color="light" expand="block">
                 Submit
               </IonButton>
             </IonCol>

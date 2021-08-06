@@ -30,13 +30,13 @@ const Account: React.FC<AccountProps> = (props) => {
       <IonContent className="acc-content">
         {true &&
           (<div className="ion-padding-top ion-text-center">
-            <img src="https://i.postimg.cc/KzS4dXGD/av2.png" alt="avatar" />
+            <img src="https://i.postimg.cc/s1dTZX3G/av4.png" alt="avatar" />
             <h2>{props.userName}</h2>
             <AccCards setUsername={props.setUsername} >Change Username</AccCards>
             <IonItem lines="none" className="acc-item">
                 <IonLabel>Logout</IonLabel>
                 <IonFab horizontal="end" >
-                    <IonFabButton className="btn" size="small" onClick={() => props.setIsLoggedin(false)}>
+                    <IonFabButton className="btn" size="small" color="success" onClick={() => props.setIsLoggedin(false)}>
                         <IonIcon icon={power} ></IonIcon>
                     </IonFabButton>
                 </IonFab>

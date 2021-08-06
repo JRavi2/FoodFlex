@@ -18,6 +18,7 @@ const Login: React.FC<Props> = ({ setIsLoggedin }) => {
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormSubmitted(true);
+    
     if(!username) {
       setUsernameError(true);
     }
@@ -40,14 +41,14 @@ const Login: React.FC<Props> = ({ setIsLoggedin }) => {
       <IonContent id="login-page">
 
         <div className="login-logo">
-          <img src="https://i.postimg.cc/9Fp9sV0Y/log.png" alt="Ionic logo"  /> 
+          <img src="https://i.postimg.cc/bJwxHcM3/log2.png" alt="Ionic logo"  /> 
         </div>
         <IonTitle className="welcome ion-text-center">WELCOME ! </IonTitle>
         <form noValidate onSubmit={login}>
           <IonList>
             <IonItem>
               <IonLabel position="floating" className="loginLabel" color="danger">Username</IonLabel>
-              <IonInput name="username" type="text" value={username} spellCheck={false} autocapitalize="off" onIonChange={e => setUsername(e.detail.value!)}
+              <IonInput name="username" type="text"  value={username} spellCheck={false} autocapitalize="off" onIonChange={e => setUsername(e.detail.value!)}
                 required>
               </IonInput>
             </IonItem>

@@ -2,6 +2,7 @@ import React, { useState ,Dispatch} from 'react';
 import { IonFab, IonTabs,IonAlert, IonTabBar, IonTabButton, IonItem, IonRange, IonLabel, IonToast, IonGrid, IonButton, IonCol, IonIcon, IonCard, IonCardContent, IonRow, IonInput, IonMenuButton, IonPage, IonTitle, IonToolbar, IonCardTitle, IonFabButton } from '@ionic/react';
 import { pencilOutline } from "ionicons/icons";
 import "./AccCards.css";
+//Change UserName Card In account section
 type UserProps = {
     setUsername: Dispatch<React.SetStateAction<string>>;
   };
@@ -13,7 +14,7 @@ const AccCards: React.FC<UserProps> = (props,setUsername) => {
             <IonItem lines="none" className="acc-item">
                 <IonLabel>{props.children}</IonLabel>
                 <IonFab horizontal="end" >
-                    <IonFabButton className="btn" size="small" onClick={() => setShowAlert(true)}>
+                    <IonFabButton className="btn" size="small" color="success" onClick={() => setShowAlert(true)}>
                         <IonIcon icon={pencilOutline} ></IonIcon>
                     </IonFabButton>
                 </IonFab>
