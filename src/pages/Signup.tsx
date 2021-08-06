@@ -29,6 +29,7 @@ const Signup: React.FC = () => {
   const [dislikedDishes, setDislikedDishes] = useState("");
   const [restSuggestions, setRestSuggestions] = useState<ReactElement<any, any>>();
   const [selectedRests, setSelectedRests] = useState<{ id: any; name: any }[]>([]);
+  const [chips,setChip] = useState<boolean>(true);
   // const [formSubmitted, setFormSubmitted] = useState(false);
   // const [usernameError, setUsernameError] = useState(false);
   // const [passwordError, setPasswordError] = useState(false);
@@ -216,9 +217,11 @@ const Signup: React.FC = () => {
                 ref={restInput}
               ></IonInput>
               {restSuggestions}
+              
               {selectedRests.map((rest: any) => (
                 <div id={rest.id}>{rest.name}</div>
               ))}
+              
             </IonItem>
 
             <IonItem>

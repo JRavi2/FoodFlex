@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from "react";
+import React, { Dispatch, useState, useRef } from "react";
 import Toasts from "../components/Toasts"
 import {
   IonPage,
@@ -29,17 +29,22 @@ type ParentProps = {
 };
 const BudgetContent: React.FC = () => {
   const [toastIsShown, setToastIsShown] = useState<boolean>(false);
+  const inBudget = useRef<HTMLIonInputElement>(null);
 
+  const clearInput =() =>{
+    inBudget.current!.value="";
+  }
   const showToast = () => {
+    clearInput();
     setToastIsShown(true);
   }
   return (
     <IonCardContent className="ion-text-center card-hidden">
-      <IonItem className="budget ion-text-right" lines="full">
-        <IonLabel position="fixed">Enter Budget</IonLabel>
-        <IonInput className="update-budget" type="number"></IonInput>
+      <IonItem className="budget" lines="full">
+        <IonLabel color="primary" position="floating" className="budgetLabel">Enter Budget</IonLabel>
+        <IonInput className="update-budget" ref={inBudget} type="number"></IonInput>
       </IonItem>
-      <IonButton color="primary" onClick={() => showToast()}>Update</IonButton>
+      <IonButton color="primary" className="cardBtn" onClick={() => showToast()}> Update</IonButton>
       <Toasts toastIsShown={toastIsShown} setToastIsShown={setToastIsShown} msg="Budget Updated"></Toasts>
     </IonCardContent>
   )
@@ -51,11 +56,12 @@ const MenuContent: React.FC = () => {
   }
   return (
     <IonCardContent className="ion-text-center card-hidden">
-      <IonItem className="budget ion-text-right" lines="full">
-        <IonLabel position="fixed">Enter File</IonLabel>
-        <IonInput className="update-budget" type="number"></IonInput>
+      <IonItem className="budget" >
+        {/* <IonLabel position="stacked" className="custom-file-upload"> */}
+        <input type="file" className="messMenu" name="upload_mess_menu" />
+        {/* </IonLabel> */}
       </IonItem>
-      <IonButton color="primary" onClick={() => showToast()}>Update</IonButton>
+      <IonButton color="primary" className="cardBtn" onClick={() => showToast()}>Upload</IonButton>
       <Toasts toastIsShown={toastIsShown} setToastIsShown={setToastIsShown} msg="Menu Added"></Toasts>
     </IonCardContent>
   )

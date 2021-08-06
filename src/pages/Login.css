@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 .login-logo {
   margin:0;
   padding:  0;
-  min-height: 200px;
+  min-height: 40%;
   text-align: center;
-  background-image: url("pizza.png") no-repeat !important;
-  /* border-radius: 0 0 180px 180px ; */
+  /* background: url("backgnd.png")100% 100%   ; */
+  border-radius: 100% 100% ;
   width: 100%;
   /* background: linear-gradient(#428cff 49%, transparent 49%),
         linear-gradient(-45deg, white 33%, transparent 33%) 0 50%,
@@ -16,9 +17,10 @@
 .welcome{
   margin:10px;
   font-size: 40px;
+  font-family: 'Fredoka One', cursive;
 }
 .login-logo img {
-  max-width: 150px;
+  width:100%;
 }
 
 .list {
@@ -27,3 +29,11 @@
 /* #login-page{
   --background: url("backgnd.png") ;
 } */
+
+.loginLabel{
+  opacity: 0.5;
+}
+.errorLogin{
+  font-size: 12px;
+  color: rgb(49, 49, 49);
+}

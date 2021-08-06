@@ -40,40 +40,40 @@ const Login: React.FC<Props> = ({ setIsLoggedin }) => {
       <IonContent id="login-page">
 
         <div className="login-logo">
-          <img src="pizza.svg" alt="Ionic logo" width="90" height="90" /> 
+          <img src="https://i.postimg.cc/9Fp9sV0Y/log.png" alt="Ionic logo"  /> 
         </div>
-        <IonTitle className="welcome">WELCOME</IonTitle>
+        <IonTitle className="welcome ion-text-center">WELCOME ! </IonTitle>
         <form noValidate onSubmit={login}>
           <IonList>
             <IonItem>
-              <IonLabel position="stacked" color="primary">Username</IonLabel>
+              <IonLabel position="floating" className="loginLabel" color="danger">Username</IonLabel>
               <IonInput name="username" type="text" value={username} spellCheck={false} autocapitalize="off" onIonChange={e => setUsername(e.detail.value!)}
                 required>
               </IonInput>
             </IonItem>
 
-            {formSubmitted && usernameError && <IonText color="danger">
-              <p className="ion-padding-start">
-                Username is required
+            {formSubmitted && usernameError && <IonText >
+              <p className="ion-padding-start errorLogin">
+                *Username is required
               </p>
             </IonText>}
 
             <IonItem>
-              <IonLabel position="stacked" color="primary">Password</IonLabel>
-              <IonInput name="password" type="password" value={password} onIonChange={e => setPassword(e.detail.value!)}>
+              <IonLabel className="loginLabel" position="floating" color="danger">Password</IonLabel>
+              <IonInput name="password"  type="password" value={password} onIonChange={e => setPassword(e.detail.value!)}>
               </IonInput>
             </IonItem>
 
-            {formSubmitted && passwordError && <IonText color="danger">
-              <p className="ion-padding-start">
-                Password is required
+            {formSubmitted && passwordError && <IonText >
+              <p className="ion-padding-start errorLogin">
+                *Password is required
               </p>
             </IonText>}
           </IonList>
 
           <IonRow>
             <IonCol>
-              <IonButton type="submit" expand="block">Login</IonButton>
+              <IonButton type="submit" color="success" expand="block">Login</IonButton>
             </IonCol>
             <IonCol>
               <IonButton routerLink="/signup" color="light" expand="block">Signup</IonButton>
