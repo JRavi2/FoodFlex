@@ -1,8 +1,5 @@
 import React, { useState, useContext, Dispatch, ReactElement, useRef } from "react";
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonPage,
   IonRow,
@@ -32,7 +29,7 @@ const Signup: React.FC = () => {
   const [dislikedDishes, setDislikedDishes] = useState("");
   const [restSuggestions, setRestSuggestions] = useState<ReactElement<any, any>>();
   const [selectedRests, setSelectedRests] = useState<{ id: any; name: any }[]>([]);
-  const [ischips,setChip] = useState<boolean>(true);
+  const [ischips, setChip] = useState(true);
   // const [formSubmitted, setFormSubmitted] = useState(false);
   // const [usernameError, setUsernameError] = useState(false);
   // const [passwordError, setPasswordError] = useState(false);
@@ -112,6 +109,15 @@ const Signup: React.FC = () => {
       });
   };
 
+  const removeChip = (restId: number) => {
+    const newSelectedRest: any = selectedRests.filter((rest) => {
+      return rest.id !== restId;
+
+    })
+
+    setSelectedRests(newSelectedRest);
+  }
+  console.log(selectedRests);
   return (
     <IonPage id="login-page">
       {/* <IonHeader>
@@ -127,7 +133,7 @@ const Signup: React.FC = () => {
         <form noValidate onSubmit={login}>
           <IonList>
             <IonItem>
-              <IonLabel position="stacked" color="primary">
+              <IonLabel position="floating" color="primary">
                 Username
               </IonLabel>
               <IonInput
@@ -145,7 +151,7 @@ const Signup: React.FC = () => {
             <SignUpInput nameIn={"name"} typeIn={"text"} value={name} setter={setName}>Name</SignUpInput>
             <SignUpInput nameIn={"address"} typeIn={"text"} value={address} setter={setAddress}>Address</SignUpInput>
             <SignUpInput nameIn={"phone"} typeIn={"tel"} value={phone} setter={setPhone}>Phone</SignUpInput>
-            <SignUpInput nameIn={"budget"} typeIn={"number"} value={budget} setter={setBudget}>Address</SignUpInput>
+            <SignUpInput nameIn={"budget"} typeIn={"number"} value={budget} setter={setBudget}>Budget</SignUpInput>
 
 
             {/* <IonItem>
@@ -216,7 +222,7 @@ const Signup: React.FC = () => {
             </IonItem> */}
 
             <IonItem>
-              <IonLabel position="stacked" color="primary">
+              <IonLabel position="floating" color="primary">
                 Preferred Restaurants
               </IonLabel>
               <IonInput
@@ -226,23 +232,22 @@ const Signup: React.FC = () => {
                 onKeyDown={onRestInputChange}
                 ref={restInput}
               ></IonInput>
+              <div>
+                {restSuggestions}
+              </div>
+              <div>
+                {selectedRests.map((rest: any) => (
+                  <div id={rest.id}>
+                    <ChipsComp restName={rest.name} restId={rest.id} removeChip={removeChip} />
+                  </div>
 
-              {restSuggestions}
-              
-              {selectedRests.map((rest: any) => (
-                <div id={rest.id} className="chipsDiv">
-                  { ischips && <ChipsComp restName={rest.name} isChips={ischips} setChip={setChip}></ChipsComp>}
-                </div>
-              
-              ))
-            }
-            
-
-              
+                ))
+                }
+              </div>
             </IonItem>
 
             <IonItem>
-              <IonLabel position="stacked" color="primary">
+              <IonLabel position="floating" color="primary">
                 Preferred Cuisines
               </IonLabel>
               <IonInput
@@ -254,7 +259,7 @@ const Signup: React.FC = () => {
             </IonItem>
 
             <IonItem>
-              <IonLabel position="stacked" color="primary">
+              <IonLabel position="floating" color="primary">
                 Disliked Dishes
               </IonLabel>
               <IonInput

@@ -3,14 +3,16 @@ import { IonChip,IonLabel,IonIcon, IonButton } from "@ionic/react";
 import {closeCircle} from "ionicons/icons";
 type ChipsProps = {
     restName: string;
-    isChips: boolean,
-    setChip: Dispatch<React.SetStateAction<boolean>>
+    
+  
+    restId: number,
+    removeChip: Function
 };
 const ChipsComp: React.FC<ChipsProps>= (props) =>{
     return(
         <IonChip className="{props.restId}">
           <IonLabel>{props.restName}</IonLabel>
-          <IonIcon icon={closeCircle} onClick={()=>props.setChip(!props.isChips)} />
+          <IonIcon icon={closeCircle} onClick={()=>props.removeChip(props.restId)} />
           
         </IonChip>
     )

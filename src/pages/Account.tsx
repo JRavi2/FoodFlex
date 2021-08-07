@@ -1,5 +1,7 @@
 import React, { useState, Dispatch } from 'react';
-import { IonHeader,IonFab,IonFabButton,IonIcon, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonList, IonItem, IonAlert, IonLabel } from '@ionic/react';
+import { IonHeader,
+  IonListHeader,
+  useIonPopover,IonBadge,IonFab,IonFabButton,IonIcon, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonList, IonItem, IonAlert, IonLabel } from '@ionic/react';
 import './Account.css';
 import AccCards from "../components/AccCards";
  import {pencilOutline,power} from "ionicons/icons";
@@ -8,14 +10,26 @@ type AccountProps = {
   setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
   userName: string;
   setUsername: Dispatch<React.SetStateAction<string>>;
+  setIsVendor: Dispatch<React.SetStateAction<boolean>>;
+  isVendor: boolean
 };
-
+const PopoverList: React.FC<{
+  onHide: () => void;
+}> = ({ onHide }) => (
+  <IonList>
+    <IonItem lines="none" button>Change Avatar</IonItem>
+    {/* <IonItem lines="none" detail={false} button onClick={onHide}>
+      Close
+    </IonItem> */}
+  </IonList>
+);
 const Account: React.FC<AccountProps> = (props) => {
 
   const clicked = (text: string) => {
     console.log(`Clicked ${text}`);
   }
   // const [userName, setUsername] = useState<string>("Ramu")
+  const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
 
   return (
     <IonPage id="account-page">
@@ -30,7 +44,14 @@ const Account: React.FC<AccountProps> = (props) => {
       <IonContent className="acc-content">
         {true &&
           (<div className="ion-padding-top ion-text-center">
-            <img src="https://i.postimg.cc/s1dTZX3G/av4.png" alt="avatar" />
+            <div>
+            <img src="https://i.postimg.cc/s1dTZX3G/av4.png" onClick={(e) =>
+            present({
+              event: e.nativeEvent,
+            })
+          } alt="avatar" />
+
+                </div>
             <h2>{props.userName}</h2>
             <AccCards setUsername={props.setUsername} >Change Username</AccCards>
             <IonItem lines="none" className="acc-item">

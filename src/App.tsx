@@ -31,7 +31,7 @@ import Account from "./pages/Account"
 const App: React.FC = () => {
   const [isLoggedin, setIsLoggedin] = useState(true);
   const [userName, setUsername] = useState<string>("Ramu");
-
+  const [isVendor, setIsVendor] = useState(true);
   useEffect(() => {
     checkIsLoggedIn(setIsLoggedin);
   }, []);
@@ -61,13 +61,14 @@ const App: React.FC = () => {
 
           </IonRouterOutlet>
           :
+          
           <IonTabs>
             <IonRouterOutlet>
             <Route path="/home" exact >
-            <Home setIsLoggedin={setIsLoggedin} userName={userName} setUsername={setUsername} />
+            <Home setIsLoggedin={setIsLoggedin} setIsVendor={setIsVendor} isVendor={isVendor} userName={userName} setUsername={setUsername} />
             </Route>
             <Route path="/account" exact >
-            <Account setIsLoggedin={setIsLoggedin} userName={userName} setUsername={setUsername} />
+            <Account setIsLoggedin={setIsLoggedin} setIsVendor={setIsVendor} isVendor={isVendor} userName={userName} setUsername={setUsername} />
             </Route>
             <Route exact path="/" render={() => <Redirect to="/home" />} />
             </IonRouterOutlet>
@@ -83,6 +84,7 @@ const App: React.FC = () => {
               </IonTabButton>
             </IonTabBar>
           </IonTabs>
+            
         }
       </IonReactRouter>
     </IonApp>

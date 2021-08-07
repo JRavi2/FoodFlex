@@ -1,5 +1,6 @@
 import React, { Dispatch, useState, useRef } from "react";
 import Toasts from "../components/Toasts"
+import VendorHome from "./VendorHome";
 import {
   IonPage,
   IonAvatar,
@@ -26,6 +27,9 @@ type ParentProps = {
   setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
   userName: string;
   setUsername: Dispatch<React.SetStateAction<string>>;
+  setIsVendor: Dispatch<React.SetStateAction<boolean>>;
+  isVendor: boolean
+
 };
 
 const BudgetContent: React.FC = () => {
@@ -88,6 +92,7 @@ const VendorContent: React.FC = () => {
 const Home: React.FC<ParentProps> = (props) => {
   return (
     <IonPage className="page">
+    { !props.isVendor ?
       <IonContent className="content">
         <IonCard className="top-card">
           <IonGrid className="top-grid">
@@ -117,7 +122,11 @@ const Home: React.FC<ParentProps> = (props) => {
         <Cards fabButton={arrowUpCircleOutline} startIcon={todayOutline} CardCon={MenuContent}>Add Menu</Cards>
         <Cards fabButton={addOutline} startIcon={personOutline} CardCon={VendorContent}>Add Vendor</Cards>
       </IonContent>
+      :
+      <VendorHome></VendorHome>
+    }
     </IonPage>
+    
   )
 }
 
