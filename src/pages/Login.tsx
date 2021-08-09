@@ -12,8 +12,11 @@ import {
   IonText,
   IonTitle,
   IonRouterLink,
+  IonIcon
 } from "@ionic/react";
 import "./Login.css";
+import { arrowForwardOutline,chevronForwardOutline} from "ionicons/icons";
+
 // import { RouteComponentProps, Redirect } from 'react-router';
 
 type Props = {
@@ -110,7 +113,9 @@ const Login: React.FC<Props> = ({ setIsLoggedin }) => {
             </IonCol>
           </IonRow>
           <IonRouterLink href="/vendorSignup" routerDirection="forward">
-            A vendor? Join us :)
+            <IonText className="vendor-txt">
+            <IonIcon icon={arrowForwardOutline} className="arrow"></IonIcon> A Vendor? Join us :)
+            </IonText>
           </IonRouterLink>
         </form>
       </IonContent>

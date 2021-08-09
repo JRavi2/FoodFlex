@@ -29,7 +29,7 @@ import "./theme/variables.css";
 import Home from "./pages/Home";
 import Account from "./pages/Account";
 const App: React.FC = () => {
-  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [isLoggedin, setIsLoggedin] = useState(true);
   const [userName, setUsername] = useState<string>("Ramu");
   const [isVendor, setIsVendor] = useState(false);
 

@@ -17,12 +17,14 @@ import {
   IonCardContent,
   IonButton,
   IonLabel,
-  IonContent
+  IonContent,
+  IonIcon,
+  IonFab,
+  IonFabButton,
 } from '@ionic/react';
 import Cards from "../components/Cards";
 import "./Home.css"
 import { cashOutline, pencilOutline, arrowUpCircleOutline, todayOutline, personOutline, addOutline } from "ionicons/icons";
-
 type ParentProps = {
   setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
   userName: string;
@@ -80,11 +82,17 @@ const VendorContent: React.FC = () => {
   }
   return (
     <IonCardContent className="ion-text-center card-hidden">
-      <IonItem className="budget ion-text-right" lines="full">
-        <IonLabel position="fixed">Enter Vendor</IonLabel>
-        <IonInput className="update-budget" type="number"></IonInput>
-      </IonItem>
-      <IonButton color="primary" onClick={() => showToast()}>Update</IonButton>
+      <IonItem>
+            <IonLabel position="floating" color="primary">
+                Enter vendor
+            </IonLabel>
+            <IonInput></IonInput>
+            <IonFab horizontal="end" >
+                    <IonFabButton className="v-btn" color="light" size="small" onClick={() => showToast()}>
+                        <IonIcon icon={addOutline} color="primary"></IonIcon>
+                    </IonFabButton>
+                </IonFab>
+        </IonItem>
       <Toasts toastIsShown={toastIsShown} setToastIsShown={setToastIsShown} msg="Vendor Added"></Toasts>
     </IonCardContent>
   )

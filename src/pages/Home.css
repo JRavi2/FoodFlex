@@ -109,4 +109,8 @@ margin:15px;
   padding-bottom: 20px;
   /* padding: 10px; */
 }
-
+.v-btn{
+  width:30px;
+  height:30px;
+  margin-top:35%;
+}
