@@ -38,15 +38,31 @@ const App: React.FC = () => {
   }, []);
 
   const checkIsLoggedIn = (setIsLoggedin: Dispatch<React.SetStateAction<boolean>>) => {
-    if (false) setIsLoggedin(true);
+    const token = localStorage.getItem("token");
+    console.log(token);
+
+    if (!token) {
+      setIsLoggedin(false);
+    } else {
+      fetch(process.env.REACT_APP_BACKEND_API_URL + "/current-user/", {
+        headers: {
+          Authorization: `JWT ${token}`,
+        },
+      }).then((res) => {
+	console.log(res);
+        if (res.status == 200) setIsLoggedin(true);
+        else setIsLoggedin(false);
+      });
+    }
   };
+
   return (
     <IonApp>
       <IonReactRouter>
         {!isLoggedin ? (
           <IonRouterOutlet>
             <Route path="/signup" exact>
-              <Signup />
+              <Signup setIsLoggedin={setIsLoggedin} />
             </Route>
             <Route path="/vendorSignup" exact>
               <VendorSignup />
@@ -83,6 +99,7 @@ const App: React.FC = () => {
                 />
               </Route>
               <Route exact path="/" render={() => <Redirect to="/home" />} />
+              <Route exact path="/signup" render={() => <Redirect to="/home" />} />
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
               <IonTabButton tab="home" href="/home">

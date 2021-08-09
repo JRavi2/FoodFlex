@@ -12,10 +12,10 @@ import {
   IonText,
   IonTitle,
   IonRouterLink,
-  IonIcon
+  IonIcon,
 } from "@ionic/react";
 import "./Login.css";
-import { arrowForwardOutline,chevronForwardOutline} from "ionicons/icons";
+import { arrowForwardOutline, chevronForwardOutline } from "ionicons/icons";
 
 // import { RouteComponentProps, Redirect } from 'react-router';
 
@@ -42,7 +42,23 @@ const Login: React.FC<Props> = ({ setIsLoggedin }) => {
     }
 
     if (username && password) {
-      setIsLoggedin(true);
+      // setIsLoggedin(true);
+      const data: any = {
+        username,
+        password,
+      };
+      fetch(process.env.REACT_APP_BACKEND_API_URL + "/token-auth/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          localStorage.setItem("token", json.token);
+	  setIsLoggedin(true);
+        });
     }
   };
 
@@ -114,7 +130,7 @@ const Login: React.FC<Props> = ({ setIsLoggedin }) => {
           </IonRow>
           <IonRouterLink href="/vendorSignup" routerDirection="forward">
             <IonText className="vendor-txt">
-            <IonIcon icon={arrowForwardOutline} className="arrow"></IonIcon> A Vendor? Join us :)
+              <IonIcon icon={arrowForwardOutline} className="arrow"></IonIcon> A Vendor? Join us :)
             </IonText>
           </IonRouterLink>
         </form>

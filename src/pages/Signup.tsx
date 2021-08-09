@@ -16,10 +16,13 @@ import SignUpInput from "../components/SignUpInput";
 import ChipsComp from "../components/ChipsComp";
 // import { RouteComponentProps, Redirect } from 'react-router';
 
-const Signup: React.FC = () => {
+type Props = {
+  setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
   const [username, setUsername] = useState("");
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
+  const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -86,22 +89,48 @@ const Signup: React.FC = () => {
     }
   };
 
-  const login = (e: React.FormEvent) => {
+  const signup = (e: React.FormEvent) => {
     e.preventDefault();
 
     // extract form data
     const target = e.target as HTMLFormElement;
     console.log(target);
-    const formdata = new FormData(target);
+    const formdata = new FormData(e.target as HTMLFormElement);
+
+    const json: any = {};
+    formdata.forEach(function(value, prop){
+      json[prop] = value
+    });
+
+    const restIds = selectedRests.map(rest => rest.id);
+    json["preferred_restaurants"] = restIds.join(",");
+
+    console.log(json);
 
     // POST the request to Staticman's API endpoint
-    fetch(process.env.REACT_APP_API_URL + "/signup/", {
+    fetch(process.env.REACT_APP_BACKEND_API_URL + "/new_signup/", {
       method: "POST",
-      // headers: {"Content-Type": "application/form-data"},
-      body: formdata,
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(json),
     })
       .then((response) => {
-        console.log("success");
+	if (response.status == 201) {
+	  console.log("success");
+	  response.json()
+	    .then(data => {
+	      localStorage.setItem("token", data.user.token);
+	      localStorage.setItem("name", data.student.name);
+	      setIsLoggedin(true);
+	      console.log(data);
+	    });
+	} else {
+	  console.log("error");
+	  response.json()
+	    .then(data => {
+	      // TODO: Display the errors on screen
+	      console.log(data);
+	    });
+	}
       })
       .catch((error) => {
         console.log("error");
@@ -130,28 +159,14 @@ const Signup: React.FC = () => {
           <img src="https://i.postimg.cc/d3nNXrr2/signup.png" alt="Ionic logo" />
         </div>
 
-        <form noValidate onSubmit={login}>
+        <form noValidate onSubmit={signup}>
           <IonList>
-            <IonItem>
-              <IonLabel position="floating" color="primary">
-                Username
-              </IonLabel>
-              <IonInput
-                name="username"
-                type="text"
-                value={username}
-                spellCheck={false}
-                autocapitalize="off"
-                onIonChange={(e) => setUsername(e.detail.value!)}
-                required
-              ></IonInput>
-            </IonItem>
-            <SignUpInput nameIn={"password1"} typeIn={"password"} value={password1} setter={setPassword1}>Password</SignUpInput>
-            <SignUpInput nameIn={"password2"} typeIn={"password"} value={password2} setter={setPassword2}>Confirm Password</SignUpInput>
+            <SignUpInput nameIn={"username"} typeIn={"text"} value={username} setter={setUsername}>Username</SignUpInput>
+            <SignUpInput nameIn={"password"} typeIn={"password"} value={password} setter={setPassword}>Password</SignUpInput>
             <SignUpInput nameIn={"name"} typeIn={"text"} value={name} setter={setName}>Name</SignUpInput>
             <SignUpInput nameIn={"address"} typeIn={"text"} value={address} setter={setAddress}>Address</SignUpInput>
             <SignUpInput nameIn={"phone"} typeIn={"tel"} value={phone} setter={setPhone}>Phone</SignUpInput>
-            <SignUpInput nameIn={"budget"} typeIn={"number"} value={budget} setter={setBudget}>Budget</SignUpInput>
+            <SignUpInput nameIn={"budget_total"} typeIn={"number"} value={budget} setter={setBudget}>Budget</SignUpInput>
 
 
             {/* <IonItem>
