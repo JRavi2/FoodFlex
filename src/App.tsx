@@ -57,7 +57,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <IonApp>
+    <IonApp className="mainApp">
       <IonReactRouter>
         {!isLoggedin ? (
           <IonRouterOutlet>

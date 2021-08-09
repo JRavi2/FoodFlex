@@ -236,7 +236,7 @@ const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
               ></IonInput>
             </IonItem> */}
 
-            <IonItem>
+            <IonItem >
               <IonLabel position="floating" color="primary">
                 Preferred Restaurants
               </IonLabel>
@@ -250,16 +250,17 @@ const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
               <div>
                 {restSuggestions}
               </div>
-              <div>
+             </IonItem>
                 {selectedRests.map((rest: any) => (
-                  <div id={rest.id}>
+                  <IonItem lines="none" className="chipsDiv">
+                  <div id={rest.id} >
                     <ChipsComp restName={rest.name} restId={rest.id} removeChip={removeChip} />
-                  </div>
+                   </div>
+                   </IonItem>
 
                 ))
                 }
-              </div>
-            </IonItem>
+             
 
             <IonItem>
               <IonLabel position="floating" color="primary">

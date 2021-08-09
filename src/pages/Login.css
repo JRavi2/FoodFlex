@@ -2,16 +2,10 @@
 .login-logo {
   margin:0;
   padding:  0;
-  min-height: 40%;
+  /* min-height: 40%; */
   text-align: center;
-  /* background: url("backgnd.png")100% 100%   ; */
   border-radius: 100% 100% ;
   width: 100%;
-  /* background: linear-gradient(#428cff 49%, transparent 49%),
-        linear-gradient(-45deg, white 33%, transparent 33%) 0 50%,
-        white linear-gradient(45deg, white 33%, #428cff 33%) 0 50%;
-    background-repeat: repeat-x;
-    background-size: 1px 100%, 20px 20px, 20px 20px; */
  
 }
 .welcome{
@@ -20,15 +14,17 @@
   font-family: 'Fredoka One', cursive;
 }
 .login-logo img {
-  width:100%;
+  max-width:100%;
 }
-
+@media only screen and (min-width: 1000px){
+  .login-logo img {
+    max-width:500px;
+    height: 400px;
+  }
+}
 .list {
   margin-bottom: 0;
 }
-/* #login-page{
-  --background: url("backgnd.png") ;
-} */
 
 .loginLabel{
   opacity: 0.5;
