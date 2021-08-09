@@ -1,15 +1,5 @@
 import React, { useState, useContext, Dispatch, ReactElement, useRef } from "react";
-import {
-  IonContent,
-  IonPage,
-  IonRow,
-  IonCol,
-  IonButton,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonInput,
-} from "@ionic/react";
+import { IonContent, IonPage, IonRow, IonCol, IonButton, IonList, IonItem, IonLabel, IonInput } from "@ionic/react";
 import "./Login.css";
 import "./Signup.css";
 import SignUpInput from "../components/SignUpInput";
@@ -18,9 +8,10 @@ import ChipsComp from "../components/ChipsComp";
 
 type Props = {
   setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
+  setHomeName: Dispatch<React.SetStateAction<string>>;
 };
 
-const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
+const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -32,7 +23,6 @@ const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
   const [dislikedDishes, setDislikedDishes] = useState("");
   const [restSuggestions, setRestSuggestions] = useState<ReactElement<any, any>>();
   const [selectedRests, setSelectedRests] = useState<{ id: any; name: any }[]>([]);
-  const [ischips, setChip] = useState(true);
   // const [formSubmitted, setFormSubmitted] = useState(false);
   // const [usernameError, setUsernameError] = useState(false);
   // const [passwordError, setPasswordError] = useState(false);
@@ -44,7 +34,6 @@ const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
     const id = e.target.id;
     const name = e.target.innerText;
     const newArray = [...selectedRests, { id: id, name: name }];
-    console.log(newArray);
     setSelectedRests(newArray);
     setRestSuggestions(<div></div>);
     setPreferredRestaurants("");
@@ -57,7 +46,7 @@ const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
       console.log("TBD");
     } else {
       // Show suggestions
-      console.log("Input value: ", restInput.current!.value);
+      // console.log("Input value: ", restInput.current!.value);
       fetch(
         process.env.REACT_APP_ZOMATO_API_URL + `/search?count=5&q=${e.target.value}&lat=28.6362295&lon=77.3763150`,
         {
@@ -98,11 +87,11 @@ const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
     const formdata = new FormData(e.target as HTMLFormElement);
 
     const json: any = {};
-    formdata.forEach(function(value, prop){
-      json[prop] = value
+    formdata.forEach(function (value, prop) {
+      json[prop] = value;
     });
 
-    const restIds = selectedRests.map(rest => rest.id);
+    const restIds = selectedRests.map((rest) => rest.id);
     json["preferred_restaurants"] = restIds.join(",");
 
     console.log(json);
@@ -110,27 +99,26 @@ const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
     // POST the request to Staticman's API endpoint
     fetch(process.env.REACT_APP_BACKEND_API_URL + "/new_signup/", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(json),
     })
       .then((response) => {
-	if (response.status == 201) {
-	  console.log("success");
-	  response.json()
-	    .then(data => {
-	      localStorage.setItem("token", data.user.token);
-	      localStorage.setItem("name", data.student.name);
-	      setIsLoggedin(true);
-	      console.log(data);
-	    });
-	} else {
-	  console.log("error");
-	  response.json()
-	    .then(data => {
-	      // TODO: Display the errors on screen
-	      console.log(data);
-	    });
-	}
+        if (response.status == 201) {
+          console.log("success");
+          response.json().then((data) => {
+            localStorage.setItem("token", data.user.token);
+            localStorage.setItem("name", data.student.name);
+            setHomeName(data.student.name);
+            setIsLoggedin(true);
+            console.log(data);
+          });
+        } else {
+          console.log("error");
+          response.json().then((data) => {
+            // TODO: Display the errors on screen
+            console.log(data);
+          });
+        }
       })
       .catch((error) => {
         console.log("error");
@@ -141,12 +129,10 @@ const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
   const removeChip = (restId: number) => {
     const newSelectedRest: any = selectedRests.filter((rest) => {
       return rest.id !== restId;
-
-    })
-
+    });
     setSelectedRests(newSelectedRest);
-  }
-  console.log(selectedRests);
+  };
+
   return (
     <IonPage id="login-page">
       {/* <IonHeader>
@@ -161,13 +147,24 @@ const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
 
         <form noValidate onSubmit={signup}>
           <IonList>
-            <SignUpInput nameIn={"username"} typeIn={"text"} value={username} setter={setUsername}>Username</SignUpInput>
-            <SignUpInput nameIn={"password"} typeIn={"password"} value={password} setter={setPassword}>Password</SignUpInput>
-            <SignUpInput nameIn={"name"} typeIn={"text"} value={name} setter={setName}>Name</SignUpInput>
-            <SignUpInput nameIn={"address"} typeIn={"text"} value={address} setter={setAddress}>Address</SignUpInput>
-            <SignUpInput nameIn={"phone"} typeIn={"tel"} value={phone} setter={setPhone}>Phone</SignUpInput>
-            <SignUpInput nameIn={"budget_total"} typeIn={"number"} value={budget} setter={setBudget}>Budget</SignUpInput>
-
+            <SignUpInput nameIn={"username"} typeIn={"text"} value={username} setter={setUsername}>
+              Username
+            </SignUpInput>
+            <SignUpInput nameIn={"password"} typeIn={"password"} value={password} setter={setPassword}>
+              Password
+            </SignUpInput>
+            <SignUpInput nameIn={"name"} typeIn={"text"} value={name} setter={setName}>
+              Name
+            </SignUpInput>
+            <SignUpInput nameIn={"address"} typeIn={"text"} value={address} setter={setAddress}>
+              Address
+            </SignUpInput>
+            <SignUpInput nameIn={"phone"} typeIn={"tel"} value={phone} setter={setPhone}>
+              Phone
+            </SignUpInput>
+            <SignUpInput nameIn={"budget_total"} typeIn={"number"} value={budget} setter={setBudget}>
+              Budget
+            </SignUpInput>
 
             {/* <IonItem>
               <IonLabel position="stacked" color="primary">
@@ -236,7 +233,7 @@ const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
               ></IonInput>
             </IonItem> */}
 
-            <IonItem >
+            <IonItem>
               <IonLabel position="floating" color="primary">
                 Preferred Restaurants
               </IonLabel>
@@ -247,20 +244,15 @@ const Signup: React.FC<Props> = ({ setIsLoggedin }) => {
                 onKeyDown={onRestInputChange}
                 ref={restInput}
               ></IonInput>
-              <div>
-                {restSuggestions}
-              </div>
-             </IonItem>
-                {selectedRests.map((rest: any) => (
-                  <IonItem lines="none" className="chipsDiv">
-                  <div id={rest.id} >
-                    <ChipsComp restName={rest.name} restId={rest.id} removeChip={removeChip} />
-                   </div>
-                   </IonItem>
-
-                ))
-                }
-             
+              <div>{restSuggestions}</div>
+            </IonItem>
+            {selectedRests.map((rest: any) => (
+              <IonItem lines="none" className="chipsDiv">
+                <div id={rest.id}>
+                  <ChipsComp restName={rest.name} restId={rest.id} removeChip={removeChip} />
+                </div>
+              </IonItem>
+            ))}
 
             <IonItem>
               <IonLabel position="floating" color="primary">

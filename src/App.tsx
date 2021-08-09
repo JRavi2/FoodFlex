@@ -39,7 +39,9 @@ const App: React.FC = () => {
 
   const checkIsLoggedIn = (setIsLoggedin: Dispatch<React.SetStateAction<boolean>>) => {
     const token = localStorage.getItem("token");
+    const name: any = localStorage.getItem("name");
     console.log(token);
+    console.log(name);
 
     if (!token) {
       setIsLoggedin(false);
@@ -49,9 +51,11 @@ const App: React.FC = () => {
           Authorization: `JWT ${token}`,
         },
       }).then((res) => {
-	console.log(res);
-        if (res.status == 200) setIsLoggedin(true);
-        else setIsLoggedin(false);
+        console.log(res);
+        if (res.status == 200) {
+          setIsLoggedin(true);
+          setUsername(name);
+        } else setIsLoggedin(false);
       });
     }
   };
@@ -62,19 +66,19 @@ const App: React.FC = () => {
         {!isLoggedin ? (
           <IonRouterOutlet>
             <Route path="/signup" exact>
-              <Signup setIsLoggedin={setIsLoggedin} />
+              <Signup setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
             </Route>
             <Route path="/vendorSignup" exact>
               <VendorSignup />
             </Route>
             <Route path="/" exact>
-              <Login setIsLoggedin={setIsLoggedin} />
+              <Login setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
             </Route>
             <Route path="/home" exact>
-              <Login setIsLoggedin={setIsLoggedin} />
+              <Login setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
             </Route>
             <Route path="/account" exact>
-              <Login setIsLoggedin={setIsLoggedin} />
+              <Login setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
             </Route>
           </IonRouterOutlet>
         ) : (
