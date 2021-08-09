@@ -79,7 +79,7 @@ const Account: React.FC<AccountProps> = ({ setIsLoggedin, userName, setUsername,
             <IonItem lines="none" className="acc-item">
               <IonLabel>Logout</IonLabel>
               <IonFab horizontal="end">
-                <IonFabButton className="btn" size="small" color="success" onClick={() => setIsLoggedin(false)}>
+                <IonFabButton className="btn" size="small" color="success" onClick={() => logout()}>
                   <IonIcon icon={power}></IonIcon>
                 </IonFabButton>
               </IonFab>

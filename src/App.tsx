@@ -31,7 +31,7 @@ import Account from "./pages/Account";
 const App: React.FC = () => {
   const [isLoggedin, setIsLoggedin] = useState(true);
   const [userName, setUsername] = useState<string>("Ramu");
-  const [isVendor, setIsVendor] = useState(false);
+  const [isVendor, setIsVendor] = useState(true);
 
   useEffect(() => {
     checkIsLoggedIn(setIsLoggedin);
@@ -69,7 +69,7 @@ const App: React.FC = () => {
               <Signup setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
             </Route>
             <Route path="/vendorSignup" exact>
-              <VendorSignup />
+              <VendorSignup setIsLoggedin={setIsLoggedin} setHomeName={setUsername} setIsVendor={setIsVendor} />
             </Route>
             <Route path="/" exact>
               <Login setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
@@ -104,6 +104,7 @@ const App: React.FC = () => {
               </Route>
               <Route exact path="/" render={() => <Redirect to="/home" />} />
               <Route exact path="/signup" render={() => <Redirect to="/home" />} />
+              <Route exact path="/vendorSignup" render={() => <Redirect to="/home" />} />
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
               <IonTabButton tab="home" href="/home">

@@ -3,12 +3,16 @@ import { IonContent, IonPage, IonRow, IonCol, IonButton, IonList, IonItem, IonLa
 import "./Login.css";
 import "./Signup.css";
 import SignUpInput from "../components/SignUpInput";
-// import { RouteComponentProps, Redirect } from 'react-router';
 
-const Signup: React.FC = () => {
+type Props = {
+  setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
+  setHomeName: Dispatch<React.SetStateAction<string>>;
+  setIsVendor: Dispatch<React.SetStateAction<boolean>>;
+};
+
+const VendorSignup: React.FC<Props> = ({ setIsLoggedin, setHomeName, setIsVendor }) => {
   const [username, setUsername] = useState("");
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
+  const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -17,27 +21,53 @@ const Signup: React.FC = () => {
   // const [usernameError, setUsernameError] = useState(false);
   // const [passwordError, setPasswordError] = useState(false);
 
-  const login = (e: React.FormEvent) => {
+  const signup = (e: React.FormEvent) => {
     e.preventDefault();
 
     // extract form data
-    const target = e.target as HTMLFormElement;
-    console.log(target);
-    const formdata = new FormData(target);
+    const formdata = new FormData(e.target as HTMLFormElement);
 
-    // POST the request to Staticman's API endpoint
-    fetch(process.env.REACT_APP_API_URL + "/signup/", {
-      method: "POST",
-      // headers: {"Content-Type": "application/form-data"},
-      body: formdata,
-    })
-      .then((response) => {
-        console.log("success");
+    const json: any = {};
+    formdata.forEach(function (value, prop) {
+      json[prop] = value;
+    });
+    console.log(json);
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log("Latitude is :", position.coords.latitude);
+      console.log("Longitude is :", position.coords.longitude);
+      json["latitude"] = position.coords.latitude;
+      json["longitude"] = position.coords.longitude;
+
+      fetch(process.env.REACT_APP_BACKEND_API_URL + "/new_vendor_signup/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(json),
       })
-      .catch((error) => {
-        console.log("error");
-        console.log(error);
-      });
+        .then((response) => {
+          if (response.status == 201) {
+            console.log("success");
+            response.json().then((data) => {
+              localStorage.setItem("token", data.user.token);
+              localStorage.setItem("name", data.vendor.name);
+	      setIsVendor(true);
+              setHomeName(data.vendor.name);
+              setIsLoggedin(true);
+              console.log(data);
+            });
+          } else {
+            console.log("error");
+            response.json().then((data) => {
+              // TODO: Display the errors on screen
+              console.log(data);
+            });
+          }
+        })
+        .catch((error) => {
+          console.log("error");
+          console.log(error);
+        });
+    });
   };
 
   return (
@@ -52,16 +82,13 @@ const Signup: React.FC = () => {
           <img src="https://i.postimg.cc/d3nNXrr2/signup.png" alt="Ionic logo" />
         </div>
 
-        <form noValidate onSubmit={login}>
+        <form noValidate onSubmit={signup}>
           <IonList>
             <SignUpInput nameIn={"username"} typeIn={"text"} value={username} setter={setUsername}>
               Username
             </SignUpInput>
-            <SignUpInput nameIn={"password1"} typeIn={"password"} value={password1} setter={setPassword1}>
+            <SignUpInput nameIn={"password"} typeIn={"password"} value={password} setter={setPassword}>
               Password
-            </SignUpInput>
-            <SignUpInput nameIn={"password2"} typeIn={"password"} value={password2} setter={setPassword2}>
-              Confirm Password
             </SignUpInput>
             <SignUpInput nameIn={"name"} typeIn={"text"} value={name} setter={setName}>
               Name
@@ -157,4 +184,4 @@ const Signup: React.FC = () => {
   );
 };
 
-export default Signup;
+export default VendorSignup;

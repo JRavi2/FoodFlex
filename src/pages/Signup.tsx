@@ -4,7 +4,6 @@ import "./Login.css";
 import "./Signup.css";
 import SignUpInput from "../components/SignUpInput";
 import ChipsComp from "../components/ChipsComp";
-// import { RouteComponentProps, Redirect } from 'react-router';
 
 type Props = {
   setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
@@ -165,73 +164,6 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
             <SignUpInput nameIn={"budget_total"} typeIn={"number"} value={budget} setter={setBudget}>
               Budget
             </SignUpInput>
-
-            {/* <IonItem>
-              <IonLabel position="stacked" color="primary">
-                Password
-              </IonLabel>
-              <IonInput
-                name="password1"
-                type="password"
-                value={password1}
-                onIonChange={(e) => setPassword1(e.detail.value!)}
-              ></IonInput>
-            </IonItem> */}
-
-            {/* <IonItem>
-              <IonLabel position="stacked" color="primary">
-                Confirm Password
-              </IonLabel>
-              <IonInput
-                name="password2"
-                type="password"
-                value={password2}
-                onIonChange={(e) => setPassword2(e.detail.value!)}
-              ></IonInput>
-            </IonItem> */}
-
-            {/* <IonItem>
-              <IonLabel position="stacked" color="primary">
-                Name
-              </IonLabel>
-              <IonInput name="name" type="text" value={name} onIonChange={(e) => setName(e.detail.value!)}></IonInput>
-            </IonItem> */}
-
-            {/* <IonItem>
-              <IonLabel position="stacked" color="primary">
-                Address
-              </IonLabel>
-              <IonInput
-                name="address"
-                type="text"
-                value={address}
-                onIonChange={(e) => setAddress(e.detail.value!)}
-              ></IonInput>
-            </IonItem> */}
-
-            {/* <IonItem>
-              <IonLabel position="stacked" color="primary">
-                Phone
-              </IonLabel>
-              <IonInput
-                name="phone"
-                type="text"
-                value={phone}
-                onIonChange={(e) => setPhone(e.detail.value!)}
-              ></IonInput>
-            </IonItem> */}
-
-            {/* <IonItem>
-              <IonLabel position="stacked" color="primary">
-                Budget
-              </IonLabel>
-              <IonInput
-                name="budget"
-                type="number"
-                value={budget}
-                onIonChange={(e) => setBudget(e.detail.value!)}
-              ></IonInput>
-            </IonItem> */}
 
             <IonItem>
               <IonLabel position="floating" color="primary">
