@@ -41,7 +41,7 @@ const App: React.FC = () => {
     if (false) setIsLoggedin(true);
   };
   return (
-    <IonApp>
+    <IonApp className="mainApp">
       <IonReactRouter>
         {!isLoggedin ? (
           <IonRouterOutlet>
