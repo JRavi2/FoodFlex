@@ -21,10 +21,11 @@ import { arrowForwardOutline, chevronForwardOutline } from "ionicons/icons";
 
 type Props = {
   setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
+  setIsVendor: Dispatch<React.SetStateAction<boolean>>;
   setHomeName: Dispatch<React.SetStateAction<string>>;
 };
 
-const Login: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
+const Login: React.FC<Props> = ({ setIsLoggedin, setIsVendor, setHomeName }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -59,7 +60,9 @@ const Login: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
         .then((json) => {
           console.log(json);
           localStorage.setItem("token", json.token);
+	  localStorage.setItem("vendor", json.isVendor ? "1" : "0");
           localStorage.setItem("name", json.name);
+	  setIsVendor(json.isVendor);
           setHomeName(json.name);
           setIsLoggedin(true);
         });

@@ -31,7 +31,7 @@ import Account from "./pages/Account";
 const App: React.FC = () => {
   const [isLoggedin, setIsLoggedin] = useState(true);
   const [userName, setUsername] = useState<string>("Ramu");
-  const [isVendor, setIsVendor] = useState(true);
+  const [isVendor, setIsVendor] = useState(false);
 
   useEffect(() => {
     checkIsLoggedIn(setIsLoggedin);
@@ -39,9 +39,17 @@ const App: React.FC = () => {
 
   const checkIsLoggedIn = (setIsLoggedin: Dispatch<React.SetStateAction<boolean>>) => {
     const token = localStorage.getItem("token");
+    const vendor: any = localStorage.getItem("vendor");
     const name: any = localStorage.getItem("name");
     console.log(token);
+    console.log(vendor);
     console.log(name);
+
+    if (vendor) {
+      setIsVendor(vendor === "1");
+    } else {
+      setIsVendor(false);
+    }
 
     if (!token) {
       setIsLoggedin(false);
@@ -53,8 +61,9 @@ const App: React.FC = () => {
       }).then((res) => {
         console.log(res);
         if (res.status == 200) {
-          setIsLoggedin(true);
+	  setIsVendor(vendor);
           setUsername(name);
+          setIsLoggedin(true);
         } else setIsLoggedin(false);
       });
     }
@@ -72,13 +81,13 @@ const App: React.FC = () => {
               <VendorSignup setIsLoggedin={setIsLoggedin} setHomeName={setUsername} setIsVendor={setIsVendor} />
             </Route>
             <Route path="/" exact>
-              <Login setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
+              <Login setIsLoggedin={setIsLoggedin} setIsVendor={setIsVendor} setHomeName={setUsername} />
             </Route>
             <Route path="/home" exact>
-              <Login setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
+              <Login setIsLoggedin={setIsLoggedin} setIsVendor={setIsVendor} setHomeName={setUsername} />
             </Route>
             <Route path="/account" exact>
-              <Login setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
+              <Login setIsLoggedin={setIsLoggedin} setIsVendor={setIsVendor} setHomeName={setUsername} />
             </Route>
           </IonRouterOutlet>
         ) : (

@@ -95,34 +95,39 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
 
     console.log(json);
 
-    // POST the request to Staticman's API endpoint
-    fetch(process.env.REACT_APP_BACKEND_API_URL + "/new_signup/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(json),
-    })
-      .then((response) => {
-        if (response.status == 201) {
-          console.log("success");
-          response.json().then((data) => {
-            localStorage.setItem("token", data.user.token);
-            localStorage.setItem("name", data.student.name);
-            setHomeName(data.student.name);
-            setIsLoggedin(true);
-            console.log(data);
-          });
-        } else {
-          console.log("error");
-          response.json().then((data) => {
-            // TODO: Display the errors on screen
-            console.log(data);
-          });
-        }
+    navigator.geolocation.getCurrentPosition((position) => {
+      json["latitude"] = position.coords.latitude;
+      json["longitude"] = position.coords.longitude;
+
+      fetch(process.env.REACT_APP_BACKEND_API_URL + "/new_signup/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(json),
       })
-      .catch((error) => {
-        console.log("error");
-        console.log(error);
-      });
+        .then((response) => {
+          if (response.status == 201) {
+            console.log("success");
+            response.json().then((data) => {
+              localStorage.setItem("token", data.user.token);
+              localStorage.setItem("vendor", "0");
+              localStorage.setItem("name", data.student.name);
+              setHomeName(data.student.name);
+              setIsLoggedin(true);
+              console.log(data);
+            });
+          } else {
+            console.log("error");
+            response.json().then((data) => {
+              // TODO: Display the errors on screen
+              console.log(data);
+            });
+          }
+        })
+        .catch((error) => {
+          console.log("error");
+          console.log(error);
+        });
+    });
   };
 
   const removeChip = (restId: number) => {

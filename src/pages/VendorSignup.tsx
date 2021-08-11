@@ -49,6 +49,7 @@ const VendorSignup: React.FC<Props> = ({ setIsLoggedin, setHomeName, setIsVendor
             console.log("success");
             response.json().then((data) => {
               localStorage.setItem("token", data.user.token);
+              localStorage.setItem("vendor", "1");
               localStorage.setItem("name", data.vendor.name);
 	      setIsVendor(true);
               setHomeName(data.vendor.name);
