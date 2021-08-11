@@ -1,4 +1,4 @@
-import React, { Dispatch, useState, useRef } from "react";
+import React, { Dispatch, useState, useRef, useEffect } from "react";
 import Toasts from "../components/Toasts"
 import VendorHome from "./VendorHome";
 import {
@@ -31,7 +31,6 @@ type ParentProps = {
   setUsername: Dispatch<React.SetStateAction<string>>;
   setIsVendor: Dispatch<React.SetStateAction<boolean>>;
   isVendor: boolean
-
 };
 
 const BudgetContent: React.FC = () => {
@@ -98,6 +97,27 @@ const VendorContent: React.FC = () => {
   )
 }
 const Home: React.FC<ParentProps> = (props) => {
+  const [recom, setRecom] = useState("");
+  const [recomPrice, setRecomPrice] = useState(0);
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_BACKEND_API_URL + "/recommend/", {
+      method: "GET",
+      headers: {Authorization: `JWT ${localStorage.getItem("token")}`}
+    }).then((res) => {
+	res.json().then(data => {
+	  console.log("Rec: ");
+	  console.log(data);
+	  if (data.flag == true) {
+	    setRecom(data.restr.name);
+	    setRecomPrice(data.restr.price);
+	  } else {
+	    setRecom("Mess food :(");
+	  }
+      });
+    });
+  }, [])
+
   return (
     <IonPage className="page">
     { !props.isVendor ?
@@ -122,8 +142,13 @@ const Home: React.FC<ParentProps> = (props) => {
 
         <IonCard className="main-card ion-text-center">
           <IonCardHeader>
+	    Our Recommendation for Today
           </IonCardHeader>
           <IonCardContent className="ion-text-center">
+	    {recom}
+          </IonCardContent>
+          <IonCardContent className="ion-text-center">
+	    {recomPrice !== 0 ? recomPrice : ""}
           </IonCardContent>
         </IonCard>
         <Cards fabButton={pencilOutline} startIcon={cashOutline} CardCon={BudgetContent}>Update Budget</Cards>
@@ -134,7 +159,7 @@ const Home: React.FC<ParentProps> = (props) => {
       <VendorHome></VendorHome>
     }
     </IonPage>
-    
+
   )
 }
 

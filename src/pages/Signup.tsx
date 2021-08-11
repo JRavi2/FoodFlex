@@ -104,20 +104,30 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(json),
       })
-        .then((response) => {
-          if (response.status == 201) {
-            console.log("success");
-            response.json().then((data) => {
-              localStorage.setItem("token", data.user.token);
-              localStorage.setItem("vendor", "0");
-              localStorage.setItem("name", data.student.name);
-              setHomeName(data.student.name);
-              setIsLoggedin(true);
-              console.log(data);
+        .then((userResponse) => {
+          if (userResponse.status == 201) {
+            console.log("User success");
+
+	    // Upload the menu
+            fetch(process.env.REACT_APP_BACKEND_API_URL + "/file_upload/", {
+              method: "POST",
+              body: formdata,
+            }).then((fileResponse) => {
+	      // If upload is successful, log in
+              if (fileResponse.status == 204) {
+                userResponse.json().then((data) => {
+                  localStorage.setItem("token", data.user.token);
+                  localStorage.setItem("vendor", "0");
+                  localStorage.setItem("name", data.student.name);
+                  setHomeName(data.student.name);
+                  setIsLoggedin(true);
+                  console.log(data);
+                });
+              }
             });
           } else {
             console.log("error");
-            response.json().then((data) => {
+            userResponse.json().then((data) => {
               // TODO: Display the errors on screen
               console.log(data);
             });
@@ -219,7 +229,7 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
               <IonLabel position="stacked" color="primary">
                 Mess Menu
               </IonLabel>
-              <input type="file" name="upload_mess_menu" />
+              <input type="file" name="file" />
             </IonItem>
           </IonList>
 

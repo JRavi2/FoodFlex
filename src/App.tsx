@@ -46,6 +46,7 @@ const App: React.FC = () => {
     console.log(name);
 
     if (vendor) {
+      console.log("vendor: ", vendor);
       setIsVendor(vendor === "1");
     } else {
       setIsVendor(false);
@@ -61,7 +62,6 @@ const App: React.FC = () => {
       }).then((res) => {
         console.log(res);
         if (res.status == 200) {
-	  setIsVendor(vendor);
           setUsername(name);
           setIsLoggedin(true);
         } else setIsLoggedin(false);
