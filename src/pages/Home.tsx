@@ -1,5 +1,5 @@
 import React, { Dispatch, useState, useRef, useEffect } from "react";
-import Toasts from "../components/Toasts"
+import Toasts from "../components/Toasts";
 import VendorHome from "./VendorHome";
 import {
   IonPage,
@@ -21,7 +21,7 @@ import {
   IonFab,
   IonFabButton,
   IonText,
-} from '@ionic/react';
+} from "@ionic/react";
 import Cards from "../components/Cards";
 import "./Home.css"
 import { cashOutline, pencilOutline, arrowUpCircleOutline, todayOutline, personOutline, addOutline, arrowForwardOutline, pizzaOutline, walletOutline } from "ionicons/icons";
@@ -30,7 +30,7 @@ type ParentProps = {
   userName: string;
   setUsername: Dispatch<React.SetStateAction<string>>;
   setIsVendor: Dispatch<React.SetStateAction<boolean>>;
-  isVendor: boolean
+  isVendor: boolean;
 };
 
 const BudgetContent: React.FC = () => {
@@ -39,46 +39,66 @@ const BudgetContent: React.FC = () => {
 
   const clearInput = () => {
     inBudget.current!.value = "";
-  }
+  };
+
   const showToast = () => {
     clearInput();
     setToastIsShown(true);
-  }
+  };
+
+  const updateBudget = () => {
+    const budget = inBudget.current!.value;
+    fetch(process.env.REACT_APP_BACKEND_API_URL + "/change_budget_spent/", {
+      method: "POST",
+      headers: { Authorization: `JWT ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ budget }),
+    }).then((res) => {
+      if (res.status == 200) showToast();
+    });
+  };
+
   return (
     <IonCardContent className="ion-text-center card-hidden">
       <IonItem className="budget" lines="full">
-        <IonLabel color="primary" position="floating" className="budgetLabel">Enter Budget</IonLabel>
+        <IonLabel color="primary" position="floating" className="budgetLabel">
+          Enter Budget
+        </IonLabel>
         <IonInput className="update-budget" ref={inBudget} type="number"></IonInput>
       </IonItem>
-      <IonButton color="light" className="cardBtn" onClick={() => showToast()}> Update</IonButton>
+      <IonButton color="light" className="cardBtn" onClick={() => updateBudget()}>
+        {" "}
+        Update
+      </IonButton>
       <Toasts toastIsShown={toastIsShown} setToastIsShown={setToastIsShown} msg="Budget Updated"></Toasts>
     </IonCardContent>
-  )
-}
+  );
+};
 
 const MenuContent: React.FC = () => {
   const [toastIsShown, setToastIsShown] = useState<boolean>(false);
   const showToast = () => {
     setToastIsShown(true);
-  }
+  };
   return (
     <IonCardContent className="ion-text-center card-hidden">
-      <IonItem className="budget" >
+      <IonItem className="budget">
         {/* <IonLabel position="stacked" className="custom-file-upload"> */}
         <input type="file" className="messMenu" name="upload_mess_menu" />
         {/* </IonLabel> */}
       </IonItem>
-      <IonButton color="light" className="cardBtn" onClick={() => showToast()}>Upload</IonButton>
+      <IonButton color="light" className="cardBtn" onClick={() => showToast()}>
+        Upload
+      </IonButton>
       <Toasts toastIsShown={toastIsShown} setToastIsShown={setToastIsShown} msg="Menu Added"></Toasts>
     </IonCardContent>
-  )
-}
+  );
+};
 
 const VendorContent: React.FC = () => {
   const [toastIsShown, setToastIsShown] = useState<boolean>(false);
   const showToast = () => {
     setToastIsShown(true);
-  }
+  };
   return (
     <IonCardContent className="ion-text-center card-hidden">
       <IonItem>
@@ -86,7 +106,7 @@ const VendorContent: React.FC = () => {
           Enter vendor
         </IonLabel>
         <IonInput></IonInput>
-        <IonFab horizontal="end" >
+        <IonFab horizontal="end">
           <IonFabButton className="v-btn" color="light" size="small" onClick={() => showToast()}>
             <IonIcon icon={addOutline} color="primary"></IonIcon>
           </IonFabButton>
@@ -94,8 +114,8 @@ const VendorContent: React.FC = () => {
       </IonItem>
       <Toasts toastIsShown={toastIsShown} setToastIsShown={setToastIsShown} msg="Vendor Added"></Toasts>
     </IonCardContent>
-  )
-}
+  );
+};
 const Home: React.FC<ParentProps> = (props) => {
   const [recom, setRecom] = useState("");
   const [recomPrice, setRecomPrice] = useState(0);
@@ -103,9 +123,9 @@ const Home: React.FC<ParentProps> = (props) => {
   useEffect(() => {
     fetch(process.env.REACT_APP_BACKEND_API_URL + "/recommend/", {
       method: "GET",
-      headers: { Authorization: `JWT ${localStorage.getItem("token")}` }
+      headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
     }).then((res) => {
-      res.json().then(data => {
+      res.json().then((data) => {
         console.log("Rec: ");
         console.log(data);
         if (data.flag == true) {
@@ -116,11 +136,11 @@ const Home: React.FC<ParentProps> = (props) => {
         }
       });
     });
-  }, [])
+  }, []);
 
   return (
     <IonPage className="page">
-      {!props.isVendor ?
+      {!props.isVendor ? (
         <IonContent className="content">
 
           <IonCard className="top-card">
@@ -135,8 +155,8 @@ const Home: React.FC<ParentProps> = (props) => {
                 <IonCol className="ion-text-right" size="5">
                   <IonButton className="pay-btn" shape="round" color="secondary" fill="outline" size="small" routerLink="/payment">Pay</IonButton>
                 </IonCol>
-                <IonCol className="av-col" >
-                  <IonAvatar className="home-img" >
+                <IonCol className="av-col">
+                  <IonAvatar className="home-img">
                     <img src="https://i.postimg.cc/s1dTZX3G/av4.png" />
                   </IonAvatar>
                 </IonCol>
@@ -183,12 +203,11 @@ const Home: React.FC<ParentProps> = (props) => {
           <Cards fabButton={arrowUpCircleOutline} startIcon={todayOutline} CardCon={MenuContent}>Add Menu</Cards>
           <Cards fabButton={addOutline} startIcon={personOutline} CardCon={VendorContent}>Add Vendor</Cards>
         </IonContent>
-        :
+      ) : (
         <VendorHome></VendorHome>
-      }
+      )}
     </IonPage>
-
-  )
-}
+  );
+};
 
 export default Home;
