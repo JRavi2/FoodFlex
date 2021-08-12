@@ -65,6 +65,7 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
     setSelectedVendors(newArray);
     setRestSuggestions(<div></div>);
     setPreferredVendors("");
+    setVendorSuggestions(<></>);
   };
 
   // Select a Restaurant
@@ -75,6 +76,7 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
     setSelectedRests(newArray);
     setVendorSuggestions(<div></div>);
     setPreferredRestaurants("");
+    setRestSuggestions(<></>);
   };
 
   // Change the autocomplete dropdown based on suggestions
@@ -282,7 +284,7 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
                 Preferred Nearby Vendors
               </IonLabel>
               <IonInput
-                name="preferred_restaurants"
+                name="preferred_vendors"
                 type="text"
                 value={preferredVendors}
                 onKeyDown={onVendorInpChange}
