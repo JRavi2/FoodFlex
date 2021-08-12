@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from "react";
+import React, { Dispatch, useState,useRef } from "react";
 import {
     IonPage,
     IonCard,
@@ -13,14 +13,13 @@ import {
     IonInput,
     useIonPicker,
     IonIcon,
-    IonText,
     IonItemSliding,
     IonItemOptions,
     IonItemOption,
     IonAlert,
 } from '@ionic/react';
 import "./Payment.css"
-import { chevronDownOutline, restaurantOutline, cardOutline, sendOutline, send } from "ionicons/icons";
+import {restaurantOutline, send } from "ionicons/icons";
 import Toasts from "../components/Toasts"
 type PaymentProps = {
     setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
@@ -31,13 +30,18 @@ type PaymentProps = {
 };
 const Payment: React.FC<PaymentProps> = (props) => {
     const [present] = useIonPicker();
-    const [showAlert, setShowAlert] = useState(false);
+    const inAmount = useRef<HTMLIonInputElement>(null);
     const [pay, setPay] = useState<number>();
     const [value, setValue] = useState('Select vendor');
     const [msg, setmsg] = useState<string>("");
     const [toastIsShown, setToastIsShown] = useState<boolean>(false);
+    const clearInput = () => {
+        inAmount.current!.value = "";
+      }
   const showToast = () => {
+    clearInput();
     setToastIsShown(true);
+    setValue("Select vendor")
   }
     return (
 
@@ -79,12 +83,12 @@ const Payment: React.FC<PaymentProps> = (props) => {
                                         {
                                             name: 'vendors',
                                             options: [
-                                                { text: 'Vendor1', value: 'Maggie wala' },
-                                                { text: 'Vendor2', value: 'Momo Wala' },
-                                                { text: 'Vendor3', value: 'Pasta Wala' },
-                                                { text: 'Vendor4', value: 'Thele ki chai' },
-                                                { text: 'Vendor5', value: 'Pizze burger' },
-                                                { text: 'Vendor6', value: 'Nukkad ki chai' },
+                                                { text: 'Food Express', value: 'Food Express, Noida' },
+                                                { text: 'Agra Retaurant', value: 'Agra Retaurant' },
+                                                { text: 'Vinod Fast Food', value: 'Vinod Fast Food' },
+                                                { text: 'Foodie Range', value: 'Foodie Range' },
+                                                { text: 'Veerji Food Corner', value: 'Veerji Food Corner' },
+                                                { text: 'Kathi Junction', value: 'Kathi Junction' },
 
                                             ],
                                         },
@@ -95,19 +99,16 @@ const Payment: React.FC<PaymentProps> = (props) => {
                             {value}
                         </IonButton>
                         <IonItem color="secondary" className="ion-text-center ">
-                            {/* <IonIcon color="primary" icon={cardOutline}></IonIcon> */}
-                            <IonInput placeholder="Enter Amount" type="number" color="primary" className="amt" onIonChange={e => setPay(parseInt((e.detail.value!)))}></IonInput>
+                            <IonInput placeholder="Enter Amount" type="number" ref={inAmount} color="primary" className="amt" onIonChange={e => setPay(parseInt((e.detail.value!)))}></IonInput>
                         </IonItem>
                         <IonItemSliding color="secondary">
-
-
                             <IonItem color="secondary" lines="none" className="ion-text-center swipe">
                                 <IonLabel>Swipe to Send</IonLabel>
                             </IonItem>
 
                             <IonItemOptions side="end">
                                 <IonItemOption color="secondary" onClick={showToast} expandable>
-                                    <IonIcon icon={send}></IonIcon>
+                                    <IonIcon icon={send} size="medium"></IonIcon>
                                 </IonItemOption>
                             </IonItemOptions>
                         </IonItemSliding>

@@ -91,6 +91,9 @@ const App: React.FC = () => {
             <Route path="/account" exact>
               <Login setIsLoggedin={setIsLoggedin} setIsVendor={setIsVendor} setHomeName={setUsername} />
             </Route>
+            <Route path="/payment" exact>
+              <Login setIsLoggedin={setIsLoggedin} setIsVendor={setIsVendor} setHomeName={setUsername} />
+            </Route>
           </IonRouterOutlet>
         ) : (
           <IonTabs>

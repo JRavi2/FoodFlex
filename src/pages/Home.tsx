@@ -24,7 +24,7 @@ import {
 } from '@ionic/react';
 import Cards from "../components/Cards";
 import "./Home.css"
-import { cashOutline, pencilOutline, arrowUpCircleOutline, todayOutline, personOutline, addOutline, arrowForwardOutline } from "ionicons/icons";
+import { cashOutline, pencilOutline, arrowUpCircleOutline, todayOutline, personOutline, addOutline, arrowForwardOutline, pizzaOutline, walletOutline } from "ionicons/icons";
 type ParentProps = {
   setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
   userName: string;
@@ -122,6 +122,7 @@ const Home: React.FC<ParentProps> = (props) => {
     <IonPage className="page">
       {!props.isVendor ?
         <IonContent className="content">
+
           <IonCard className="top-card">
             <IonGrid className="top-grid">
               <IonRow>
@@ -130,12 +131,9 @@ const Home: React.FC<ParentProps> = (props) => {
                     <IonCardSubtitle>Hello</IonCardSubtitle>
                     <IonCardTitle className="userName">{props.userName}</IonCardTitle>
                   </IonCardHeader>
-
                 </IonCol>
                 <IonCol className="ion-text-right" size="5">
-               
-                <IonButton className="pay-btn" shape="round" color="secondary" fill="outline" size="small" routerLink="/payment">Pay</IonButton>
-
+                  <IonButton className="pay-btn" shape="round" color="secondary" fill="outline" size="small" routerLink="/payment">Pay</IonButton>
                 </IonCol>
                 <IonCol className="av-col" >
                   <IonAvatar className="home-img" >
@@ -147,19 +145,40 @@ const Home: React.FC<ParentProps> = (props) => {
           </IonCard>
 
           <IonCard className="main-card ion-text-center">
-            <IonCardHeader>
-              Our Recommendation for Today
+            <IonCardHeader className="ion-text-left card-head " color="medium">
+              Meal for today
             </IonCardHeader>
             <IonCardContent className="ion-text-center">
-              <IonText>{recom}</IonText>
-              {/* uncomment for paybutton */}
-              {/* <IonButton routerLink="/payment">Pay</IonButton> */}
-            </IonCardContent>
-            <IonCardContent className="ion-text-center">
-              {recomPrice !== 0 ? recomPrice : ""}
-            </IonCardContent>
+              <IonGrid className="gridfull" >
+                <IonRow >
+                  <IonCol className="icol" size="2">
+                    <IonIcon icon={pizzaOutline} className="icons"></IonIcon>
 
+                  </IonCol>
+                  <IonCol className="ion-text-left icol" size="5">
+                    <IonText className="head1" color="secondary" >Top Dish:</IonText>
+                  </IonCol>
+                  <IonCol className="icol" size="5">
+                    <IonText className="recomm" color="secondary">{recom}</IonText>
+                  </IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol size="2">
+                    <IonIcon icon={walletOutline} className="icons"></IonIcon>
+
+                  </IonCol>
+                  <IonCol className="ion-text-left" size="5">
+
+                    <IonText className="head1" color="secondary">Price:</IonText>
+                  </IonCol>
+                  <IonCol size="5">
+                    <IonText className="recomm">{recomPrice !== 0 ? recomPrice : ""}</IonText>
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonCardContent>
           </IonCard>
+
           <Cards fabButton={pencilOutline} startIcon={cashOutline} CardCon={BudgetContent}>Update Budget</Cards>
           <Cards fabButton={arrowUpCircleOutline} startIcon={todayOutline} CardCon={MenuContent}>Add Menu</Cards>
           <Cards fabButton={addOutline} startIcon={personOutline} CardCon={VendorContent}>Add Vendor</Cards>

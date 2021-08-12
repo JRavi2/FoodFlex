@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@303&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Anton&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 .content{
   background: url("backg.png") !important;
 
@@ -118,4 +120,38 @@ margin:15px;
 .pay-btn{
   margin-top:15%;
   opacity:0.6;
+}
+.card-head{
+  opacity: 0.5;
+  font-family: 'Patrick Hand', cursive;
+  height: 50px;
+  font-size: 20px;
+
+}
+.head1{
+  font-size: 160%;
+  opacity: 0.8;
+  font-family: 'Signika', sans-serif;
+
+  color:white;
+
+}
+.recomm{
+  font-size: 150%;
+  opacity: 0.8;
+  font-family: 'Signika', sans-serif;
+  color:white;
+}
+.icons{
+  color:white;
+  font-size: 30px;
+  opacity: 0.6;
+}
+
+.icol{
+  margin:0;
+  padding:0;
+}
+.gridfull{
+  margin-top: 30px;
 }
