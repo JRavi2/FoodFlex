@@ -20,6 +20,7 @@ import {
   IonIcon,
   IonFab,
   IonFabButton,
+  IonText,
 } from "@ionic/react";
 import Cards from "../components/Cards";
 import "./Home.css";
@@ -30,7 +31,9 @@ import {
   todayOutline,
   personOutline,
   addOutline,
+  arrowForwardOutline,
 } from "ionicons/icons";
+
 type ParentProps = {
   setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
   userName: string;
@@ -157,6 +160,18 @@ const Home: React.FC<ParentProps> = (props) => {
                     <IonCardTitle className="userName">{props.userName}</IonCardTitle>
                   </IonCardHeader>
                 </IonCol>
+                <IonCol className="ion-text-right" size="5">
+                  <IonButton
+                    className="pay-btn"
+                    shape="round"
+                    color="secondary"
+                    fill="outline"
+                    size="small"
+                    routerLink="/payment"
+                  >
+                    Pay
+                  </IonButton>
+                </IonCol>
                 <IonCol className="av-col">
                   <IonAvatar className="home-img">
                     <img src="https://i.postimg.cc/s1dTZX3G/av4.png" />
@@ -169,7 +184,7 @@ const Home: React.FC<ParentProps> = (props) => {
           <IonCard className="main-card ion-text-center">
             <IonCardHeader>Our Recommendation for Today</IonCardHeader>
             <IonCardContent className="ion-text-center">
-              {recom}
+              <IonText>{recom}</IonText>
               {/* uncomment for paybutton */}
               {/* <IonButton routerLink="/payment">Pay</IonButton> */}
             </IonCardContent>

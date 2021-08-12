@@ -24,6 +24,7 @@
 }
 .av-col{
   margin-right:20px;
+  padding:0;
 }
 .home-img{
   position:absolute;
@@ -113,4 +114,8 @@ margin:15px;
   width:30px;
   height:30px;
   margin-top:35%;
+}
+.pay-btn{
+  margin-top:15%;
+  opacity:0.6;
 }

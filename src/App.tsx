@@ -55,7 +55,7 @@ const App: React.FC = () => {
     }
 
     if (!token) {
-      setIsLoggedin(false);
+       setIsLoggedin(false);
     } else {
       fetch(process.env.REACT_APP_BACKEND_API_URL + "/current-user/", {
         headers: {
