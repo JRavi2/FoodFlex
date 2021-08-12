@@ -75,7 +75,7 @@ const Account: React.FC<AccountProps> = ({ setIsLoggedin, userName, setUsername,
               />
             </div>
             <h2>{userName}</h2>
-            <AccCards setUsername={setUsername}>Change Username</AccCards>
+            <AccCards setUsername={setUsername}>Change Password</AccCards>
             <IonItem lines="none" className="acc-item">
               <IonLabel>Logout</IonLabel>
               <IonFab horizontal="end">
