@@ -4,7 +4,6 @@ import VendorHome from "./VendorHome";
 import {
   IonPage,
   IonAvatar,
-  IonToast,
   IonGrid,
   IonRow,
   IonItem,
@@ -37,8 +36,8 @@ const BudgetContent: React.FC = () => {
   const [toastIsShown, setToastIsShown] = useState<boolean>(false);
   const inBudget = useRef<HTMLIonInputElement>(null);
 
-  const clearInput =() =>{
-    inBudget.current!.value="";
+  const clearInput = () => {
+    inBudget.current!.value = "";
   }
   const showToast = () => {
     clearInput();
@@ -82,16 +81,16 @@ const VendorContent: React.FC = () => {
   return (
     <IonCardContent className="ion-text-center card-hidden">
       <IonItem>
-            <IonLabel position="floating" color="primary">
-                Enter vendor
-            </IonLabel>
-            <IonInput></IonInput>
-            <IonFab horizontal="end" >
-                    <IonFabButton className="v-btn" color="light" size="small" onClick={() => showToast()}>
-                        <IonIcon icon={addOutline} color="primary"></IonIcon>
-                    </IonFabButton>
-                </IonFab>
-        </IonItem>
+        <IonLabel position="floating" color="primary">
+          Enter vendor
+        </IonLabel>
+        <IonInput></IonInput>
+        <IonFab horizontal="end" >
+          <IonFabButton className="v-btn" color="light" size="small" onClick={() => showToast()}>
+            <IonIcon icon={addOutline} color="primary"></IonIcon>
+          </IonFabButton>
+        </IonFab>
+      </IonItem>
       <Toasts toastIsShown={toastIsShown} setToastIsShown={setToastIsShown} msg="Vendor Added"></Toasts>
     </IonCardContent>
   )
@@ -103,61 +102,64 @@ const Home: React.FC<ParentProps> = (props) => {
   useEffect(() => {
     fetch(process.env.REACT_APP_BACKEND_API_URL + "/recommend/", {
       method: "GET",
-      headers: {Authorization: `JWT ${localStorage.getItem("token")}`}
+      headers: { Authorization: `JWT ${localStorage.getItem("token")}` }
     }).then((res) => {
-	res.json().then(data => {
-	  console.log("Rec: ");
-	  console.log(data);
-	  if (data.flag == true) {
-	    setRecom(data.restr.name);
-	    setRecomPrice(data.restr.price);
-	  } else {
-	    setRecom("Mess food :(");
-	  }
+      res.json().then(data => {
+        console.log("Rec: ");
+        console.log(data);
+        if (data.flag == true) {
+          setRecom(data.restr.name);
+          setRecomPrice(data.restr.price);
+        } else {
+          setRecom("Mess food :(");
+        }
       });
     });
   }, [])
 
   return (
     <IonPage className="page">
-    { !props.isVendor ?
-      <IonContent className="content">
-        <IonCard className="top-card">
-          <IonGrid className="top-grid">
-            <IonRow>
-              <IonCol>
-                <IonCardHeader>
-                  <IonCardSubtitle>Hello</IonCardSubtitle>
-                  <IonCardTitle className="userName">{props.userName}</IonCardTitle>
-                </IonCardHeader>
-              </IonCol>
-              <IonCol className="av-col" >
-                <IonAvatar className="home-img" >
-                  <img src="https://i.postimg.cc/s1dTZX3G/av4.png" />
-                </IonAvatar>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </IonCard>
+      {!props.isVendor ?
+        <IonContent className="content">
+          <IonCard className="top-card">
+            <IonGrid className="top-grid">
+              <IonRow>
+                <IonCol>
+                  <IonCardHeader>
+                    <IonCardSubtitle>Hello</IonCardSubtitle>
+                    <IonCardTitle className="userName">{props.userName}</IonCardTitle>
+                  </IonCardHeader>
+                </IonCol>
+                <IonCol className="av-col" >
+                  <IonAvatar className="home-img" >
+                    <img src="https://i.postimg.cc/s1dTZX3G/av4.png" />
+                  </IonAvatar>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </IonCard>
 
-        <IonCard className="main-card ion-text-center">
-          <IonCardHeader>
-	    Our Recommendation for Today
-          </IonCardHeader>
-          <IonCardContent className="ion-text-center">
-	    {recom}
-          </IonCardContent>
-          <IonCardContent className="ion-text-center">
-	    {recomPrice !== 0 ? recomPrice : ""}
-          </IonCardContent>
-        </IonCard>
-        <Cards fabButton={pencilOutline} startIcon={cashOutline} CardCon={BudgetContent}>Update Budget</Cards>
-        <Cards fabButton={arrowUpCircleOutline} startIcon={todayOutline} CardCon={MenuContent}>Add Menu</Cards>
-        <Cards fabButton={addOutline} startIcon={personOutline} CardCon={VendorContent}>Add Vendor</Cards>
-      </IonContent>
-      :
-      <VendorHome></VendorHome>
-    }
+          <IonCard className="main-card ion-text-center">
+            <IonCardHeader>
+              Our Recommendation for Today
+            </IonCardHeader>
+            <IonCardContent className="ion-text-center">
+              {recom}
+              {/* uncomment for paybutton */}
+              {/* <IonButton routerLink="/payment">Pay</IonButton> */}
+            </IonCardContent>
+            <IonCardContent className="ion-text-center">
+              {recomPrice !== 0 ? recomPrice : ""}
+            </IonCardContent>
+
+          </IonCard>
+          <Cards fabButton={pencilOutline} startIcon={cashOutline} CardCon={BudgetContent}>Update Budget</Cards>
+          <Cards fabButton={arrowUpCircleOutline} startIcon={todayOutline} CardCon={MenuContent}>Add Menu</Cards>
+          <Cards fabButton={addOutline} startIcon={personOutline} CardCon={VendorContent}>Add Vendor</Cards>
+        </IonContent>
+        :
+        <VendorHome></VendorHome>
+      }
     </IonPage>
 
   )

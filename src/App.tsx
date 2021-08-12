@@ -7,7 +7,7 @@ import { home, personCircle } from "ionicons/icons";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import VendorSignup from "./pages/VendorSignup";
-
+import Payment from "./pages/Payment"
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 
@@ -32,6 +32,9 @@ const App: React.FC = () => {
   const [isLoggedin, setIsLoggedin] = useState(true);
   const [userName, setUsername] = useState<string>("Ramu");
   const [isVendor, setIsVendor] = useState(false);
+  const [phone, setPhone] = useState<number>(9988107754);
+  const [amountPaid, setAmount] = useState<number>(300);
+
 
   useEffect(() => {
     checkIsLoggedIn(setIsLoggedin);
@@ -114,6 +117,10 @@ const App: React.FC = () => {
               <Route exact path="/" render={() => <Redirect to="/home" />} />
               <Route exact path="/signup" render={() => <Redirect to="/home" />} />
               <Route exact path="/vendorSignup" render={() => <Redirect to="/home" />} />
+              <Route exact path="/payment" render={() => <Redirect to="/home" />}>
+                <Payment setIsLoggedin={setIsLoggedin} setHomeName={setUsername} userName={userName} phoneNumber={phone} amountPaid={amountPaid}></Payment>
+              </Route>
+
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
               <IonTabButton tab="home" href="/home">
