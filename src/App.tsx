@@ -44,12 +44,11 @@ const App: React.FC = () => {
     const token = localStorage.getItem("token");
     const vendor: any = localStorage.getItem("vendor");
     const name: any = localStorage.getItem("name");
-    console.log(token);
-    console.log(vendor);
-    console.log(name);
+    // console.log(token);
+    // console.log(vendor);
+    // console.log(name);
 
     if (vendor) {
-      console.log("vendor: ", vendor);
       setIsVendor(vendor === "1");
     } else {
       setIsVendor(false);

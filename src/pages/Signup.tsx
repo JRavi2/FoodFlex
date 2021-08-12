@@ -1,5 +1,6 @@
-import React, { useState, useContext, Dispatch, ReactElement, useRef } from "react";
+import React, { useState, useContext, Dispatch, ReactElement, useRef, useEffect } from "react";
 import { IonContent, IonPage, IonRow, IonCol, IonButton, IonList, IonItem, IonLabel, IonInput } from "@ionic/react";
+import fuzzysort from "fuzzysort";
 import "./Login.css";
 import "./Signup.css";
 import SignUpInput from "../components/SignUpInput";
@@ -17,16 +18,54 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [budget, setBudget] = useState("");
-  const [preferredRestaurants, setPreferredRestaurants] = useState("");
   const [preferredCuisines, setPreferredCuisines] = useState("");
   const [dislikedDishes, setDislikedDishes] = useState("");
+
+  const [preferredRestaurants, setPreferredRestaurants] = useState("");
   const [restSuggestions, setRestSuggestions] = useState<ReactElement<any, any>>();
   const [selectedRests, setSelectedRests] = useState<{ id: any; name: any }[]>([]);
+
+  const [preferredVendors, setPreferredVendors] = useState("");
+  const [vendorList, setVendorList] = useState<{ id: any; name: any }[]>([
+    { id: "abc", name: "ABC" },
+    { id: "xyz", name: "XYZ" },
+  ]);
+  const [vendorSuggestions, setVendorSuggestions] = useState<ReactElement<any, any>>();
+  const [selectedVendors, setSelectedVendors] = useState<{ id: any; name: any }[]>([]);
   // const [formSubmitted, setFormSubmitted] = useState(false);
   // const [usernameError, setUsernameError] = useState(false);
   // const [passwordError, setPasswordError] = useState(false);
 
   const restInput = useRef<HTMLIonInputElement>(null);
+
+  // Get the nearby vendors list
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      fetch(
+        process.env.REACT_APP_BACKEND_API_URL +
+          `/closest_vendors/?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`,
+        {
+          method: "GET",
+        }
+      ).then((res) => {
+        res.json().then((data) => {
+          console.log("Vendors: ");
+          console.log(data);
+	  setVendorList(data["Nearby Vendors"]);
+        });
+      });
+    });
+  }, []);
+
+  // Select a Vendor
+  const selectVendor = (e: any) => {
+    const id = e.target.id;
+    const name = e.target.innerText;
+    const newArray = [...selectedVendors, { id: id, name: name }];
+    setSelectedVendors(newArray);
+    setRestSuggestions(<div></div>);
+    setPreferredVendors("");
+  };
 
   // Select a Restaurant
   const selectRest = (e: any) => {
@@ -34,8 +73,38 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
     const name = e.target.innerText;
     const newArray = [...selectedRests, { id: id, name: name }];
     setSelectedRests(newArray);
-    setRestSuggestions(<div></div>);
+    setVendorSuggestions(<div></div>);
     setPreferredRestaurants("");
+  };
+
+  // Change the autocomplete dropdown based on suggestions
+  const onVendorInpChange = (e: any) => {
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].some((key) => key === e.key)) {
+      // TODO: Move up and down in suggestions (Low Priority)
+      console.log("TBD");
+    } else {
+      // Show suggestions
+      // console.log("Input value: ", restInput.current!.value);
+      const suggestions = fuzzysort.go(e.target.value, vendorList, { key: "name" });
+      // The suggestions List
+      const list = (
+        <div id="autocomplete-list" className="autocomplete-items">
+          {suggestions.map(({ obj }: any) => {
+            console.log(obj);
+            return (
+              <div id={obj.id} key={obj.id} onClick={selectVendor}>
+                {" "}
+                {obj.name}{" "}
+              </div>
+            );
+          })}
+        </div>
+      );
+      console.log(suggestions);
+      console.log(list);
+      setVendorSuggestions(list);
+      setPreferredVendors(e.target.value);
+    }
   };
 
   // Change the autocomplete dropdown based on suggestions
@@ -91,7 +160,9 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
     });
 
     const restIds = selectedRests.map((rest) => rest.id);
+    const vendorNames = selectedVendors.map((vendor) => vendor.id);
     json["preferred_restaurants"] = restIds.join(",");
+    json["preferred_vendors"] = vendorNames.join(",");
 
     console.log(json);
 
@@ -108,12 +179,12 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
           if (userResponse.status == 201) {
             console.log("User success");
 
-	    // Upload the menu
+            // Upload the menu
             fetch(process.env.REACT_APP_BACKEND_API_URL + "/file_upload/", {
               method: "POST",
               body: formdata,
             }).then((fileResponse) => {
-	      // If upload is successful, log in
+              // If upload is successful, log in
               if (fileResponse.status == 204) {
                 userResponse.json().then((data) => {
                   localStorage.setItem("token", data.user.token);
@@ -140,11 +211,18 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
     });
   };
 
-  const removeChip = (restId: number) => {
+  const removeRestChip = (restId: number) => {
     const newSelectedRest: any = selectedRests.filter((rest) => {
       return rest.id !== restId;
     });
     setSelectedRests(newSelectedRest);
+  };
+
+  const removeVendChip = (vendId: number) => {
+    const newSelectedVendors: any = selectedVendors.filter((vend) => {
+      return vend.id !== vendId;
+    });
+    setSelectedRests(newSelectedVendors);
   };
 
   return (
@@ -196,7 +274,28 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
             {selectedRests.map((rest: any) => (
               <IonItem lines="none" className="chipsDiv">
                 <div id={rest.id}>
-                  <ChipsComp restName={rest.name} restId={rest.id} removeChip={removeChip} />
+                  <ChipsComp restName={rest.name} restId={rest.id} removeChip={removeRestChip} />
+                </div>
+              </IonItem>
+            ))}
+
+            <IonItem>
+              <IonLabel position="floating" color="primary">
+                Preferred Nearby Vendors
+              </IonLabel>
+              <IonInput
+                name="preferred_restaurants"
+                type="text"
+                value={preferredVendors}
+                onKeyDown={onVendorInpChange}
+                // ref={restInput}
+              ></IonInput>
+              <div>{vendorSuggestions}</div>
+            </IonItem>
+            {selectedVendors.map((vend: any) => (
+              <IonItem lines="none" className="chipsDiv">
+                <div id={vend.id}>
+                  <ChipsComp restName={vend.name} restId={vend.id} removeChip={removeVendChip} />
                 </div>
               </IonItem>
             ))}
