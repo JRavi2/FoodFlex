@@ -50,8 +50,8 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
       ).then((res) => {
         res.json().then((data) => {
           console.log("Vendors: ");
-          console.log(data);
-	  setVendorList(data["Nearby Vendors"]);
+          console.log(data.vendors);
+	  setVendorList(data.vendors);
         });
       });
     });
@@ -85,12 +85,11 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
     } else {
       // Show suggestions
       // console.log("Input value: ", restInput.current!.value);
-      const suggestions = fuzzysort.go(e.target.value, vendorList, { key: "name" });
+      const suggestions = vendorList.length !== 0 ? fuzzysort.go(e.target.value, vendorList, { key: "name" }) : [];
       // The suggestions List
       const list = (
         <div id="autocomplete-list" className="autocomplete-items">
           {suggestions.map(({ obj }: any) => {
-            console.log(obj);
             return (
               <div id={obj.id} key={obj.id} onClick={selectVendor}>
                 {" "}
@@ -101,7 +100,6 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
         </div>
       );
       console.log(suggestions);
-      console.log(list);
       setVendorSuggestions(list);
       setPreferredVendors(e.target.value);
     }
@@ -162,7 +160,7 @@ const Signup: React.FC<Props> = ({ setIsLoggedin, setHomeName }) => {
     const restIds = selectedRests.map((rest) => rest.id);
     const vendorNames = selectedVendors.map((vendor) => vendor.id);
     json["preferred_restaurants"] = restIds.join(",");
-    json["preferred_vendors"] = vendorNames.join(",");
+    json["preferred_vendors"] = vendorNames.length != 0 ? vendorNames.join(",") : ",";
 
     console.log(json);
 
