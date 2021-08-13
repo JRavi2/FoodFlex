@@ -8,5 +8,7 @@
  
  Step2: Install Ionic react
  > npm install -g @ionic/cli
+
+
  > ionic serve
  
