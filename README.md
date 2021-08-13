@@ -1,7 +1,8 @@
 # Foodflex
 The purpose of the app to help university hostel students to manage their monthly food budget by recommending the best option of the day
 be it mess food or food from their favourite restaurant  considering their budget, their likes and dislikes. 
- 
+# Backend Repo Link 
+    https://github.com/KartikKapil/food-app
 # How to Run
 Install Ionic CLI:
 
