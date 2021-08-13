@@ -4,6 +4,8 @@
  
  #How to Run
  Step1: Clone the repository
+ 
+ 
  Step2: Install Ionic react
  > npm install -g @ionic/cli
  > ionic serve
