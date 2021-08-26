@@ -31,6 +31,9 @@ type ParentProps = {
   setUsername: Dispatch<React.SetStateAction<string>>;
   setIsVendor: Dispatch<React.SetStateAction<boolean>>;
   isVendor: boolean;
+  currBudget: number;
+  setBudget: Dispatch<React.SetStateAction<number>>;
+
 };
 
 const BudgetContent: React.FC = () => {
@@ -65,7 +68,7 @@ const BudgetContent: React.FC = () => {
         </IonLabel>
         <IonInput className="update-budget" ref={inBudget} type="number"></IonInput>
       </IonItem>
-      <IonButton color="light" className="cardBtn" onClick={() => updateBudget()}>
+      <IonButton color="light" className="cardBtn" size="small" onClick={() => updateBudget()}>
         {" "}
         Update
       </IonButton>
@@ -116,6 +119,35 @@ const VendorContent: React.FC = () => {
     </IonCardContent>
   );
 };
+
+const WalletContent: React.FC = () =>{
+  const [toastIsShown, setToastIsShown] = useState<boolean>(false);
+  const inWallet = useRef<HTMLIonInputElement>(null);
+
+  const clearInput = () => {
+    inWallet.current!.value = "";
+  };
+
+  const showToast = () => {
+    clearInput();
+    setToastIsShown(true);
+  };
+  return(
+    <IonCardContent className="ion-text-center card-hidden">
+    <IonItem className="budget" lines="full">
+      <IonLabel color="primary" position="floating" className="budgetLabel">
+        Enter Amount
+      </IonLabel>
+      <IonInput className="update-budget" ref={inWallet} type="number"></IonInput>
+    </IonItem>
+    <IonButton color="light" className="cardBtn" size="small">
+      {" "}
+      Update
+    </IonButton>
+    <Toasts toastIsShown={toastIsShown} setToastIsShown={setToastIsShown} msg="Added to wallet"></Toasts>
+  </IonCardContent>
+  )
+}
 const Home: React.FC<ParentProps> = (props) => {
   const [recom, setRecom] = useState("");
   const [recomPrice, setRecomPrice] = useState(0);
@@ -142,7 +174,6 @@ const Home: React.FC<ParentProps> = (props) => {
     <IonPage className="page">
       {!props.isVendor ? (
         <IonContent className="content">
-
           <IonCard className="top-card">
             <IonGrid className="top-grid">
               <IonRow>
@@ -202,6 +233,8 @@ const Home: React.FC<ParentProps> = (props) => {
           <Cards fabButton={pencilOutline} startIcon={cashOutline} CardCon={BudgetContent}>Update Budget</Cards>
           <Cards fabButton={arrowUpCircleOutline} startIcon={todayOutline} CardCon={MenuContent}>Add Menu</Cards>
           <Cards fabButton={addOutline} startIcon={personOutline} CardCon={VendorContent}>Add Vendor</Cards>
+          <Cards fabButton={addOutline} startIcon={walletOutline} CardCon={WalletContent}>Add Money to Wallet</Cards>
+
         </IonContent>
       ) : (
         <VendorHome></VendorHome>

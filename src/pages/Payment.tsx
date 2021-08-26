@@ -27,6 +27,8 @@ type PaymentProps = {
     userName: string;
     phoneNumber: number;
     amountPaid: number;
+    currBudget: number;
+    setBudget: Dispatch<React.SetStateAction<number>>;
 };
 const Payment: React.FC<PaymentProps> = (props) => {
     const [present] = useIonPicker();
@@ -50,8 +52,8 @@ const Payment: React.FC<PaymentProps> = (props) => {
                 <IonCard color="secondary" className="ion-text-center pay-card">
 
                     <IonCardHeader className="ion-text-left header">
-                        <IonCardSubtitle>Pay vendor</IonCardSubtitle>
-                        <IonCardTitle className="user-title" ><p className="head">{props.userName}</p></IonCardTitle>
+                        <IonCardSubtitle>Balance</IonCardSubtitle>
+                        <IonCardTitle className="user-title" ><p className="head">&#8377; {props.currBudget}</p></IonCardTitle>
                     </IonCardHeader>
 
                     <IonCardContent className="cardcon">

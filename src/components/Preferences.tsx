@@ -250,7 +250,7 @@ const Preferences: React.FC<Prefprops> = (props) => {
             <IonGrid className="pref">
                 <IonRow>
                     <IonCol>
-                        <h2 className="header pref">Preferences</h2>
+                        <h2 className="headers pref">Preferences</h2>
                     </IonCol>
                 </IonRow>
                 <IonRow className="cardRow">
