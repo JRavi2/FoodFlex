@@ -21,6 +21,7 @@ const Vendor: React.FC<Props> = ({ setIsLoggedin, setHomeName, setIsVendor }) =>
   const [phone, setPhone] = useState("");
   const [price, setPrice] = useState("");
   const [panNum, setPan] = useState("");
+  const [selectedDate, setSelectedDate] = useState<string>("2000-01-01T13:47:20.789");
 
   // const [formSubmitted, setFormSubmitted] = useState(false);
   // const [usernameError, setUsernameError] = useState(false);
@@ -36,6 +37,10 @@ const Vendor: React.FC<Props> = ({ setIsLoggedin, setHomeName, setIsVendor }) =>
     formdata.forEach(function (value, prop) {
       json[prop] = value;
     });
+    const dob = new Date(selectedDate);
+    json["DOB_date"] = dob.getDate();
+    json["DOB_month"] = dob.getMonth()+1;
+    json["DOB_year"] = dob.getFullYear();
     console.log(json);
 
     navigator.geolocation.getCurrentPosition((position) => {
@@ -88,16 +93,16 @@ const Vendor: React.FC<Props> = ({ setIsLoggedin, setHomeName, setIsVendor }) =>
           <IonGrid>
             <SignupRows nameIn={"username"} typeIn={"text"} setter={setUsername} ionIcon={personAddOutline}>Username</SignupRows>
             <SignupRows nameIn={"password"} typeIn={"password"} setter={setPassword} ionIcon={keyOutline}>Password</SignupRows>
-            <SignupRows nameIn={"fname"} typeIn={"text"} setter={setName} ionIcon={personOutline}>First Name</SignupRows>
-            <SignupRows nameIn={"lname"} typeIn={"text"} setter={setLName} ionIcon={personOutline}>Last Name</SignupRows>
+            <SignupRows nameIn={"name"} typeIn={"text"} setter={setName} ionIcon={personOutline}>First Name</SignupRows>
+            <SignupRows nameIn={"last_name"} typeIn={"text"} setter={setLName} ionIcon={personOutline}>Last Name</SignupRows>
             <SignupRows nameIn={"address"} typeIn={"text"} setter={setAddress} ionIcon={homeOutline}>Address</SignupRows>
             <SignupRows nameIn={"phone"} typeIn={"tel"} setter={setPhone} ionIcon={phonePortraitOutline}>Phone</SignupRows>
             <SignupRows nameIn={"price"} typeIn={"number"} setter={setPrice} ionIcon={walletOutline}>Price</SignupRows>
-            <SignupRows nameIn={"pan_num"} typeIn={"number"} setter={setPan} ionIcon={cardOutline}>Pan Card</SignupRows>
+            <SignupRows nameIn={"PAN_number"} typeIn={"text"} setter={setPan} ionIcon={cardOutline}>Pan Card</SignupRows>
             <IonRow >
               <IonCol className="cardRow">
                 <IonCard>
-                  <DateTimeExamples></DateTimeExamples>
+                  <DateTimeExamples selectedDate={selectedDate} setSelectedDate={setSelectedDate}></DateTimeExamples>
                 </IonCard>
               </IonCol>
             </IonRow>

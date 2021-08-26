@@ -153,21 +153,23 @@ const Home: React.FC<ParentProps> = (props) => {
   const [recomPrice, setRecomPrice] = useState(0);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_BACKEND_API_URL + "/recommend/", {
-      method: "GET",
-      headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
-    }).then((res) => {
-      res.json().then((data) => {
-        console.log("Rec: ");
-        console.log(data);
-        if (data.flag == true) {
-          setRecom(data.restr.name);
-          setRecomPrice(data.restr.price);
-        } else {
-          setRecom("Mess food :(");
-        }
+    if (!props.isVendor) {
+      fetch(process.env.REACT_APP_BACKEND_API_URL + "/recommend/", {
+	method: "GET",
+	headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+      }).then((res) => {
+	res.json().then((data) => {
+	  console.log("Rec: ");
+	  console.log(data);
+	  if (data.flag == true) {
+	    setRecom(data.restr.name);
+	    setRecomPrice(data.restr.price);
+	  } else {
+	    setRecom("Mess food :(");
+	  }
+	});
       });
-    });
+    }
   }, []);
 
   return (
