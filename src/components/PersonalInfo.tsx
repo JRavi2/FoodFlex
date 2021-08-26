@@ -8,6 +8,7 @@ import {
 import SignupRows from "./SignupRows";
 import { personAddOutline, keyOutline, personOutline, homeOutline, phonePortraitOutline, walletOutline, cardOutline } from "ionicons/icons";
 import DateTimeExamples from "./DateofBirth";
+
 type Setters = {
     setUsername: Dispatch<React.SetStateAction<string>>;
     setPassword: Dispatch<React.SetStateAction<string>>;
@@ -18,7 +19,10 @@ type Setters = {
     setBudget: Dispatch<React.SetStateAction<string>>;
     setPan: Dispatch<React.SetStateAction<string>>;
     inInput: RefObject<HTMLIonInputElement>;
+    selectedDate: string;
+    setSelectedDate: Dispatch<React.SetStateAction<string>>;
 };
+
 const PersonalInfo: React.FC<Setters> = (props) => {
     return (
         <IonGrid>
@@ -34,12 +38,12 @@ const PersonalInfo: React.FC<Setters> = (props) => {
             <SignupRows  nameIn={"address"} typeIn={"text"} setter={props.setAddress} ionIcon={homeOutline}>Address</SignupRows>
             <SignupRows  nameIn={"phone"} typeIn={"tel"}  setter={props.setPhone} ionIcon={phonePortraitOutline}>Phone</SignupRows>
             <SignupRows  nameIn={"budget_total"} typeIn={"number"} setter={props.setBudget} ionIcon={walletOutline}>Budget</SignupRows>
-            <SignupRows  nameIn={"pan_num"} typeIn={"number"} setter={props.setPan} ionIcon={cardOutline}>Pan Card</SignupRows>
+            <SignupRows  nameIn={"pan_num"} typeIn={"text"} setter={props.setPan} ionIcon={cardOutline}>Pan Card</SignupRows>
 
             <IonRow >
                 <IonCol className="cardRow">
                     <IonCard>
-                        <DateTimeExamples></DateTimeExamples>
+                        <DateTimeExamples selectedDate={props.selectedDate} setSelectedDate={props.setSelectedDate}></DateTimeExamples>
                     </IonCard>
                 </IonCol>
             </IonRow>
