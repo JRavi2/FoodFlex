@@ -8,6 +8,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import VendorSignup from "./pages/VendorSignup";
 import Payment from "./pages/Payment"
+import SignUpSlide from "./pages/SignUpSlide";
+import Landing from "./pages/Landing"
+import Vendor from "./pages/Vendor"
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 
@@ -77,13 +80,17 @@ const App: React.FC = () => {
         {!isLoggedin ? (
           <IonRouterOutlet>
             <Route path="/signup" exact>
-              <Signup setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
+              <SignUpSlide setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
             </Route>
             <Route path="/vendorSignup" exact>
-              <VendorSignup setIsLoggedin={setIsLoggedin} setHomeName={setUsername} setIsVendor={setIsVendor} />
+              {/* <VendorSignup setIsLoggedin={setIsLoggedin} setHomeName={setUsername} setIsVendor={setIsVendor} /> */}
+              <Vendor setIsLoggedin={setIsLoggedin} setHomeName={setUsername} setIsVendor={setIsVendor}></Vendor>
             </Route>
             <Route path="/" exact>
               <Login setIsLoggedin={setIsLoggedin} setIsVendor={setIsVendor} setHomeName={setUsername} />
+            </Route>
+            <Route path="/landing" exact>
+              <Landing />
             </Route>
             <Route path="/home" exact>
               <Login setIsLoggedin={setIsLoggedin} setIsVendor={setIsVendor} setHomeName={setUsername} />
