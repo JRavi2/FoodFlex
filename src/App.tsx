@@ -37,7 +37,7 @@ const App: React.FC = () => {
   const [isVendor, setIsVendor] = useState(false);
   const [phone, setPhone] = useState<number>(9988107754);
   const [amountPaid, setAmount] = useState<number>(300);
-
+  const [currBudget, setBudget] = useState<number>(100);
 
   useEffect(() => {
     checkIsLoggedIn(setIsLoggedin);
@@ -112,6 +112,8 @@ const App: React.FC = () => {
                   isVendor={isVendor}
                   userName={userName}
                   setUsername={setUsername}
+                  currBudget={currBudget}
+                  setBudget={setBudget}
                 />
               </Route>
               <Route path="/account" exact>
@@ -121,13 +123,16 @@ const App: React.FC = () => {
                   isVendor={isVendor}
                   userName={userName}
                   setUsername={setUsername}
+                  currBudget={currBudget}
+                  setBudget={setBudget}
                 />
               </Route>
               <Route exact path="/" render={() => <Redirect to="/home" />} />
               <Route exact path="/signup" render={() => <Redirect to="/home" />} />
               <Route exact path="/vendorSignup" render={() => <Redirect to="/home" />} />
               <Route exact path="/payment" render={() => <Redirect to="/home" />}>
-                <Payment setIsLoggedin={setIsLoggedin} setHomeName={setUsername} userName={userName} phoneNumber={phone} amountPaid={amountPaid}></Payment>
+                <Payment setIsLoggedin={setIsLoggedin} setHomeName={setUsername} userName={userName} phoneNumber={phone} amountPaid={amountPaid} currBudget={currBudget}
+                  setBudget={setBudget}></Payment>
               </Route>
 
             </IonRouterOutlet>

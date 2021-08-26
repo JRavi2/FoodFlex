@@ -14,6 +14,10 @@ import {
   IonList,
   IonItem,
   IonLabel,
+  IonCard,
+  IonCardSubtitle,
+  IonText,
+  IonCardTitle,
 } from "@ionic/react";
 import "./Account.css";
 import AccCards from "../components/AccCards";
@@ -25,6 +29,8 @@ type AccountProps = {
   setUsername: Dispatch<React.SetStateAction<string>>;
   setIsVendor: Dispatch<React.SetStateAction<boolean>>;
   isVendor: boolean;
+  currBudget: number;
+  setBudget: Dispatch<React.SetStateAction<number>>;
 };
 
 const PopoverList: React.FC<{
@@ -40,7 +46,7 @@ const PopoverList: React.FC<{
   </IonList>
 );
 
-const Account: React.FC<AccountProps> = ({ setIsLoggedin, userName, setUsername, setIsVendor, isVendor }) => {
+const Account: React.FC<AccountProps> = ({ setIsLoggedin, userName, setUsername, setIsVendor, isVendor, currBudget }) => {
   const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
 
   const logout = () => {
@@ -75,6 +81,11 @@ const Account: React.FC<AccountProps> = ({ setIsLoggedin, userName, setUsername,
               />
             </div>
             <h2>{userName}</h2>
+              <div className="ion-padding">
+              <IonText color="primary" className="CurrBudget"> &#8377; {currBudget}</IonText>
+              <IonCardSubtitle>Current Balance</IonCardSubtitle>
+
+              </div>
             <AccCards setUsername={setUsername}>Change Password</AccCards>
             <IonItem lines="none" className="acc-item">
               <IonLabel>Logout</IonLabel>

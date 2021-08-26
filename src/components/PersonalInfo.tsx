@@ -28,7 +28,7 @@ const PersonalInfo: React.FC<Setters> = (props) => {
         <IonGrid>
             <IonRow className="cardRow" >
                 <IonCol className="cardRow">
-                    <h2 className=" header">Personal Details</h2>
+                    <h2 className=" headers">Personal Details</h2>
                 </IonCol>
             </IonRow>
             <SignupRows  nameIn={"username"} typeIn={"text"}  setter={props.setUsername} ionIcon={personAddOutline}>Username</SignupRows>
