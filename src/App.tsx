@@ -32,7 +32,7 @@ import "./theme/variables.css";
 import Home from "./pages/Home";
 import Account from "./pages/Account";
 const App: React.FC = () => {
-  const [isLoggedin, setIsLoggedin] = useState(true);
+  const [isLoggedin, setIsLoggedin] = useState(false);
   const [userName, setUsername] = useState<string>("Ramu");
   const [isVendor, setIsVendor] = useState(false);
   const [phone, setPhone] = useState<number>(9988107754);
@@ -80,7 +80,7 @@ const App: React.FC = () => {
         {!isLoggedin ? (
           <IonRouterOutlet>
             <Route path="/signup" exact>
-              <SignUpSlide setIsLoggedin={setIsLoggedin} setHomeName={setUsername} />
+              <SignUpSlide setIsLoggedin={setIsLoggedin} setHomeName={setUsername} setIsVendor={setIsVendor} />
             </Route>
             <Route path="/vendorSignup" exact>
               {/* <VendorSignup setIsLoggedin={setIsLoggedin} setHomeName={setUsername} setIsVendor={setIsVendor} /> */}

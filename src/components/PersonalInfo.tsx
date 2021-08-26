@@ -8,6 +8,7 @@ import {
 import SignupRows from "./SignupRows";
 import { personAddOutline, keyOutline, personOutline, homeOutline, phonePortraitOutline, walletOutline, cardOutline } from "ionicons/icons";
 import DateTimeExamples from "./DateofBirth";
+
 type Setters = {
     setUsername: Dispatch<React.SetStateAction<string>>;
     setPassword: Dispatch<React.SetStateAction<string>>;
@@ -18,7 +19,10 @@ type Setters = {
     setBudget: Dispatch<React.SetStateAction<string>>;
     setPan: Dispatch<React.SetStateAction<string>>;
     inInput: RefObject<HTMLIonInputElement>;
+    selectedDate: string;
+    setSelectedDate: Dispatch<React.SetStateAction<string>>;
 };
+
 const PersonalInfo: React.FC<Setters> = (props) => {
     return (
         <IonGrid>
@@ -39,7 +43,7 @@ const PersonalInfo: React.FC<Setters> = (props) => {
             <IonRow >
                 <IonCol className="cardRow">
                     <IonCard>
-                        <DateTimeExamples></DateTimeExamples>
+                        <DateTimeExamples selectedDate={props.selectedDate} setSelectedDate={props.setSelectedDate}></DateTimeExamples>
                     </IonCard>
                 </IonCol>
             </IonRow>
