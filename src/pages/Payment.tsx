@@ -50,7 +50,7 @@ const Payment: React.FC<PaymentProps> = (props) => {
     clearInput();
     fetch(process.env.REACT_APP_BACKEND_API_URL + "/make_transaction/", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": `JWT ${localStorage.getItem("token")}` },
+      headers: { "Content-Type": "application/json", Authorization: `JWT ${localStorage.getItem("token")}` },
       body: JSON.stringify({ username: value, amount: pay }),
     })
       .then((userResponse) => {
@@ -89,9 +89,9 @@ const Payment: React.FC<PaymentProps> = (props) => {
       headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
     }).then((res) => {
       res.json().then((data) => {
-	console.log("Balance: ");
-	console.log(data);
-	setBalance(data["Balance"]);
+        console.log("Balance: ");
+        console.log(data);
+        setBalance(data["Balance"]);
       });
     });
   }, []);
@@ -178,7 +178,8 @@ const Payment: React.FC<PaymentProps> = (props) => {
           </IonCardContent>
         </IonCard>
         <div className="pay-logo">
-          <img src="https://i.postimg.cc/YSm0wwDW/pay2.png" alt="Ionic logo" />
+          {/* https://i.postimg.cc/YSm0wwDW/pay2.png */}
+          <img src="https://i.postimg.cc/VkZDMvJr/Let-s-Start-2.png" alt="Ionic logo" />
         </div>
       </IonContent>
     </IonPage>
@@ -186,4 +187,3 @@ const Payment: React.FC<PaymentProps> = (props) => {
 };
 
 export default Payment;
-
