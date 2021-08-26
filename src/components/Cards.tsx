@@ -3,7 +3,7 @@ import { IonFab,  IonItem, IonIcon, IonCard, IonCardTitle, IonFabButton } from '
 import "./Cards.css";
 
 type CardProps = {
-    CardCon: React.FunctionComponent;
+    CardCon: any;
     fabButton: string;
     startIcon: string;
 };
@@ -25,7 +25,7 @@ const Cards: React.FC<CardProps> = (props) => {
                 </IonFab>
             </IonItem>
             {isShow &&
-                <props.CardCon></props.CardCon>
+                props.CardCon
             }
         </IonCard>
     )

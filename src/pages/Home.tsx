@@ -25,6 +25,7 @@ import {
 import Cards from "../components/Cards";
 import "./Home.css"
 import { cashOutline, pencilOutline, arrowUpCircleOutline, todayOutline, personOutline, addOutline, arrowForwardOutline, pizzaOutline, walletOutline } from "ionicons/icons";
+
 type ParentProps = {
   setIsLoggedin: Dispatch<React.SetStateAction<boolean>>;
   userName: string;
@@ -33,7 +34,10 @@ type ParentProps = {
   isVendor: boolean;
   currBudget: number;
   setBudget: Dispatch<React.SetStateAction<number>>;
+};
 
+type WalletProps = {
+  setBalance: Dispatch<React.SetStateAction<number>>;
 };
 
 const BudgetContent: React.FC = () => {
@@ -120,7 +124,7 @@ const VendorContent: React.FC = () => {
   );
 };
 
-const WalletContent: React.FC = () =>{
+const WalletContent: React.FC<WalletProps> = ({ setBalance }) =>{
   const [toastIsShown, setToastIsShown] = useState<boolean>(false);
   const inWallet = useRef<HTMLIonInputElement>(null);
 
@@ -132,6 +136,7 @@ const WalletContent: React.FC = () =>{
     clearInput();
     setToastIsShown(true);
   };
+
   return(
     <IonCardContent className="ion-text-center card-hidden">
     <IonItem className="budget" lines="full">
@@ -140,7 +145,7 @@ const WalletContent: React.FC = () =>{
       </IonLabel>
       <IonInput className="update-budget" ref={inWallet} type="number"></IonInput>
     </IonItem>
-    <IonButton color="light" className="cardBtn" size="small">
+    <IonButton color="light" className="cardBtn" size="small" onClick={showToast}>
       {" "}
       Update
     </IonButton>
@@ -151,6 +156,7 @@ const WalletContent: React.FC = () =>{
 const Home: React.FC<ParentProps> = (props) => {
   const [recom, setRecom] = useState("");
   const [recomPrice, setRecomPrice] = useState(0);
+  const [balance, setBalance] = useState(0);
 
   useEffect(() => {
     if (!props.isVendor) {
@@ -167,6 +173,17 @@ const Home: React.FC<ParentProps> = (props) => {
 	  } else {
 	    setRecom("Mess food :(");
 	  }
+	});
+      });
+
+      fetch(process.env.REACT_APP_BACKEND_API_URL + "/get_balance/", {
+	method: "GET",
+	headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+      }).then((res) => {
+	res.json().then((data) => {
+	  console.log("Balance: ");
+	  console.log(data);
+	  setBalance(data["Balance"]);
 	});
       });
     }
@@ -232,10 +249,10 @@ const Home: React.FC<ParentProps> = (props) => {
             </IonCardContent>
           </IonCard>
 
-          <Cards fabButton={pencilOutline} startIcon={cashOutline} CardCon={BudgetContent}>Update Budget</Cards>
-          <Cards fabButton={arrowUpCircleOutline} startIcon={todayOutline} CardCon={MenuContent}>Add Menu</Cards>
-          <Cards fabButton={addOutline} startIcon={personOutline} CardCon={VendorContent}>Add Vendor</Cards>
-          <Cards fabButton={addOutline} startIcon={walletOutline} CardCon={WalletContent}>Add Money to Wallet</Cards>
+	  <Cards fabButton={pencilOutline} startIcon={cashOutline} CardCon={<BudgetContent />}>Update Budget</Cards>
+	  <Cards fabButton={arrowUpCircleOutline} startIcon={todayOutline} CardCon={<MenuContent />}>Add Menu</Cards>
+	  <Cards fabButton={addOutline} startIcon={personOutline} CardCon={<VendorContent />}>Add Vendor</Cards>
+	  <Cards fabButton={addOutline} startIcon={walletOutline} CardCon={<WalletContent setBalance={setBalance} />}>Add Money to Wallet</Cards>
 
         </IonContent>
       ) : (
