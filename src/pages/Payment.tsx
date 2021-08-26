@@ -119,7 +119,8 @@ const Payment: React.FC<PaymentProps> = (props) => {
                     </IonCardContent>
                 </IonCard>
                 <div className="pay-logo">
-                    <img src="https://i.postimg.cc/YSm0wwDW/pay2.png" alt="Ionic logo" />
+                {/* https://i.postimg.cc/YSm0wwDW/pay2.png */}
+                    <img src="https://i.postimg.cc/VkZDMvJr/Let-s-Start-2.png" alt="Ionic logo" />
                 </div>
             </IonContent>
 
