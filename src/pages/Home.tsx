@@ -126,6 +126,7 @@ const VendorContent: React.FC = () => {
 
 const WalletContent: React.FC<WalletProps> = ({ setBalance }) =>{
   const [toastIsShown, setToastIsShown] = useState<boolean>(false);
+  const [amount, setAmount] = useState("0");
   const inWallet = useRef<HTMLIonInputElement>(null);
 
   const clearInput = () => {
@@ -133,8 +134,16 @@ const WalletContent: React.FC<WalletProps> = ({ setBalance }) =>{
   };
 
   const showToast = () => {
-    clearInput();
-    setToastIsShown(true);
+    fetch(process.env.REACT_APP_BACKEND_API_URL + "/add_balance/", {
+      method: "POST",
+      headers: { Authorization: `JWT ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: parseInt(amount) }),
+    }).then((res) => {
+      if (res.status == 200) {
+	clearInput();
+	setToastIsShown(true);
+      }
+    });
   };
 
   return(
@@ -143,7 +152,7 @@ const WalletContent: React.FC<WalletProps> = ({ setBalance }) =>{
       <IonLabel color="primary" position="floating" className="budgetLabel">
         Enter Amount
       </IonLabel>
-      <IonInput className="update-budget" ref={inWallet} type="number"></IonInput>
+      <IonInput className="update-budget" ref={inWallet} type="number" onIonChange={(e) => setAmount(e.detail.value!)}></IonInput>
     </IonItem>
     <IonButton color="light" className="cardBtn" size="small" onClick={showToast}>
       {" "}

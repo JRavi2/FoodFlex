@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React, { useEffect, Dispatch, useState } from "react";
 import {
   IonHeader,
   useIonPopover,
@@ -48,6 +48,7 @@ const PopoverList: React.FC<{
 
 const Account: React.FC<AccountProps> = ({ setIsLoggedin, userName, setUsername, setIsVendor, isVendor, currBudget }) => {
   const [present, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
+  const [balance, setBalance] = useState(0);
 
   const logout = () => {
     setIsLoggedin(false);
@@ -55,6 +56,19 @@ const Account: React.FC<AccountProps> = ({ setIsLoggedin, userName, setUsername,
     localStorage.removeItem("token");
     localStorage.removeItem("name");
   };
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_BACKEND_API_URL + "/get_balance/", {
+      method: "GET",
+      headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+    }).then((res) => {
+      res.json().then((data) => {
+	console.log("Balance: ");
+	console.log(data);
+	setBalance(data["Balance"]);
+      });
+    });
+  }, []);
 
   return (
     <IonPage id="account-page">
@@ -81,11 +95,12 @@ const Account: React.FC<AccountProps> = ({ setIsLoggedin, userName, setUsername,
               />
             </div>
             <h2>{userName}</h2>
+	    {!isVendor &&
               <div className="ion-padding">
-              <IonText color="primary" className="CurrBudget"> &#8377; {currBudget}</IonText>
+              <IonText color="primary" className="CurrBudget"> &#8377; {balance}</IonText>
               <IonCardSubtitle>Current Balance</IonCardSubtitle>
-
               </div>
+	    }
             <AccCards setUsername={setUsername}>Change Password</AccCards>
             <IonItem lines="none" className="acc-item">
               <IonLabel>Logout</IonLabel>
