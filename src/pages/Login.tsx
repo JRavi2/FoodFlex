@@ -1,4 +1,5 @@
 import React, { useState, Dispatch } from "react";
+import Toasts from "../components/Toasts";
 import {
   IonContent,
   IonPage,
@@ -31,6 +32,19 @@ const Login: React.FC<Props> = ({ setIsLoggedin, setIsVendor, setHomeName }) => 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [toastIsShown, setToastIsShown] = useState<boolean>(false);
+
+  const clearInput = () => {
+		setUsername("");
+		setPassword("");
+		setUsernameError(false);
+		setPasswordError(false);
+  };
+
+  const showToast = () => {
+		clearInput();
+    setToastIsShown(true);
+  };
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,13 +70,19 @@ const Login: React.FC<Props> = ({ setIsLoggedin, setIsVendor, setHomeName }) => 
         },
         body: JSON.stringify(data),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status == 200) return res.json();
+          return;
+        })
         .then((json) => {
           console.log(json);
+          if (!json) {
+            return showToast();
+          }
           localStorage.setItem("token", json.token);
-	  localStorage.setItem("vendor", json.isVendor ? "1" : "0");
+          localStorage.setItem("vendor", json.isVendor ? "1" : "0");
           localStorage.setItem("name", json.name);
-	  setIsVendor(json.isVendor);
+          setIsVendor(json.isVendor);
           setHomeName(json.name);
           setIsLoggedin(true);
         });
@@ -71,6 +91,7 @@ const Login: React.FC<Props> = ({ setIsLoggedin, setIsVendor, setHomeName }) => 
 
   return (
     <IonPage id="login-page">
+      <Toasts toastIsShown={toastIsShown} setToastIsShown={setToastIsShown} msg="Invalid credentials"></Toasts>
       {/* <IonHeader>
         <IonToolbar>
           <IonTitle>Login</IonTitle>
